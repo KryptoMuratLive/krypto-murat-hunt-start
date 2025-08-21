@@ -134,7 +134,58 @@ const Index = () => {
                 </div>
                 
                 {/* Secondary Navigation Row */}
-                <div className="flex justify-center mt-8">
+                <div className="grid md:grid-cols-4 gap-6 mt-8">
+                  <Link to="/universum" className="group">
+                    <Card className="comic-card">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                          <span className="text-2xl">🌌</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Universum</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Erkunde die Lore und frage das allwissende Universum.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                          Entdecken →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link to="/analyse" className="group">
+                    <Card className="comic-card">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-accent/10 rounded-full flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                          <span className="text-2xl">🧠</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">KI-Analyse</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Verstehe Community-Entscheidungen mit KI-Power.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+                          Analysieren →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  <Link to="/chat" className="group">
+                    <Card className="comic-card">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-secondary/10 rounded-full flex items-center justify-center group-hover:bg-secondary/20 transition-colors">
+                          <span className="text-2xl">💬</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Community Chat</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Chatte mit der Community - der Jäger hört mit!
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
+                          Chatten →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
                   <Link to="/whitepaper" className="group">
                     <Card className="comic-card">
                       <CardContent className="p-6 text-center space-y-4">

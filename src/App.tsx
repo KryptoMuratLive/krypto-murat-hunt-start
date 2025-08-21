@@ -13,6 +13,8 @@ import Live from "./pages/Live";
 import Vote from "./pages/Vote";
 import Episode from "./pages/Episode";
 import Universum from "./pages/Universum";
+import Analyse from "./pages/Analyse";
+import Chat from "./pages/Chat";
 import Whitepaper from "./pages/Whitepaper";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
@@ -31,6 +33,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/nft" element={<NFT />} />
             <Route path="/universum" element={<Universum />} />
+            <Route path="/analyse" element={<Analyse />} />
+            <Route path="/chat" element={<Chat />} />
             <Route path="/whitepaper" element={<Whitepaper />} />
             <Route path="/impressum" element={<Impressum />} />
             <Route path="/datenschutz" element={<Datenschutz />} />

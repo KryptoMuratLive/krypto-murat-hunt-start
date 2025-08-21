@@ -3,10 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Search, Filter, Zap, Brain, Sword, MapPin, Clock } from "lucide-react";
+import { ArrowLeft, Search, Filter, Zap, Brain, Sword, MapPin, Clock, MessageCircle, Sparkles, Loader2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { WalletWidget } from "@/components/WalletWidget";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
 
 interface Character {
   id: number;
@@ -213,7 +216,48 @@ export default function Universum() {
   const [selectedCharacter, setSelectedCharacter] = useState<Character | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [teamFilter, setTeamFilter] = useState<"all" | "murat" | "jäger">("all");
-  const [activeTab, setActiveTab] = useState<"characters" | "locations" | "timeline">("characters");
+  const [activeTab, setActiveTab] = useState<"characters" | "locations" | "timeline" | "ask">("characters");
+  
+  // Ask Universe feature state
+  const [universeQuestion, setUniverseQuestion] = useState("");
+  const [universeAnswer, setUniverseAnswer] = useState("");
+  const [isAskingUniverse, setIsAskingUniverse] = useState(false);
+  const { toast } = useToast();
+  
+  const askUniverse = async () => {
+    if (!universeQuestion.trim()) {
+      toast({
+        title: "Frage fehlt",
+        description: "Bitte stelle eine Frage an das Universum.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsAskingUniverse(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('ask-universe', {
+        body: { question: universeQuestion }
+      });
+
+      if (error) throw error;
+      
+      setUniverseAnswer(data.answer);
+      toast({
+        title: "Das Universum hat geantwortet",
+        description: "Die Weisheit der Blockchain wurde enthüllt.",
+      });
+    } catch (error) {
+      console.error('Error asking universe:', error);
+      toast({
+        title: "Fehler",
+        description: "Das Universum schweigt momentan. Versuche es später erneut.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAskingUniverse(false);
+    }
+  };
 
   const filteredCharacters = characters.filter(character => {
     const matchesSearch = character.name.toLowerCase().includes(searchQuery.toLowerCase());
@@ -293,6 +337,13 @@ export default function Universum() {
               onClick={() => setActiveTab("timeline")}
             >
               Timeline
+            </Button>
+            <Button
+              variant={activeTab === "ask" ? "default" : "outline"}
+              onClick={() => setActiveTab("ask")}
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              Frage das Universum
             </Button>
           </div>
         </div>
@@ -461,6 +512,84 @@ export default function Universum() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Ask Universe Section */}
+      {activeTab === "ask" && (
+        <section className="py-12 px-4">
+          <div className="container mx-auto">
+            <div className="max-w-2xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                  Frage das Universum
+                </h2>
+                <p className="text-muted-foreground">
+                  Stelle eine Frage an den allwissenden Erzähler der KryptoMurat-Welt. 
+                  Das Universum kennt alle Geheimnisse...
+                </p>
+              </div>
+              
+              <Card className="comic-card bg-gradient-to-b from-background to-muted/20 border-2 border-primary/20">
+                <CardHeader>
+                  <div className="flex items-center justify-center space-x-2 mb-4">
+                    <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+                    <CardTitle className="text-xl text-center">Das Orakel der Blockchain</CardTitle>
+                    <Sparkles className="w-6 h-6 text-primary animate-pulse" />
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div>
+                    <label className="text-sm font-medium mb-2 block">Deine Frage:</label>
+                    <Textarea
+                      placeholder="Wer ist der stärkste Charakter? Was passiert, wenn Murat verliert? Wie sieht die Welt außerhalb des Spiels aus?"
+                      value={universeQuestion}
+                      onChange={(e) => setUniverseQuestion(e.target.value)}
+                      rows={3}
+                      className="resize-none"
+                    />
+                  </div>
+                  
+                  <div className="flex justify-center">
+                    <Button 
+                      onClick={askUniverse} 
+                      disabled={isAskingUniverse || !universeQuestion.trim()}
+                      className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90"
+                      size="lg"
+                    >
+                      {isAskingUniverse ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Das Universum denkt nach...
+                        </>
+                      ) : (
+                        <>
+                          <MessageCircle className="w-4 h-4 mr-2" />
+                          Antwort erhalten
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  
+                  {universeAnswer && (
+                    <div className="mt-6 p-6 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 rounded-lg">
+                      <div className="flex items-center space-x-2 mb-3">
+                        <Sparkles className="w-5 h-5 text-primary" />
+                        <h4 className="font-semibold text-primary">Die Antwort des Universums:</h4>
+                      </div>
+                      <p className="text-foreground italic leading-relaxed">
+                        "{universeAnswer}"
+                      </p>
+                    </div>
+                  )}
+                  
+                  <div className="text-center text-xs text-muted-foreground">
+                    <p>Das Universum spricht in Rätseln und Metaphern aus der Welt von KryptoMurat Live</p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

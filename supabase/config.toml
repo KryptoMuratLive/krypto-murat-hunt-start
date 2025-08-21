@@ -1,1 +1,10 @@
 project_id = "jmsngfbiyqzzwhdgouoo"
+
+[functions.ask-universe]
+verify_jwt = false
+
+[functions.analyze-community]  
+verify_jwt = false
+
+[functions.hunter-response]
+verify_jwt = false
