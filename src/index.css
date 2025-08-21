@@ -8,35 +8,42 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Dark Comic Theme */
+    --background: 220 13% 8%;
+    --foreground: 60 100% 95%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 13% 12%;
+    --card-foreground: 60 100% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 13% 12%;
+    --popover-foreground: 60 100% 95%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 35 100% 55%; /* Bitcoin Orange */
+    --primary-foreground: 220 13% 8%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 160 84% 39%; /* Crypto Green */
+    --secondary-foreground: 220 13% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 13% 18%;
+    --muted-foreground: 220 9% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 280 100% 70%; /* Neon Purple */
+    --accent-foreground: 220 13% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 60 100% 95%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 25%;
+    --input: 220 13% 18%;
+    --ring: 35 100% 55%;
 
-    --radius: 0.5rem;
+    /* Comic Effects */
+    --comic-glow: 0 0 20px hsl(var(--primary));
+    --comic-text-shadow: 2px 2px 0px hsl(var(--accent)), 4px 4px 8px rgba(0,0,0,0.8);
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(220 13% 15%));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(220 13% 16%));
+    
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -101,5 +108,36 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .comic-title {
+    @apply text-6xl font-black uppercase tracking-wider;
+    text-shadow: var(--comic-text-shadow);
+    background: linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .comic-card {
+    @apply relative overflow-hidden rounded-lg border-2 border-border;
+    background: var(--gradient-card);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+
+  .comic-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--comic-glow), 0 12px 40px rgba(0,0,0,0.5);
+  }
+
+  .neon-glow {
+    box-shadow: var(--comic-glow);
+  }
+
+  .hero-bg {
+    background: var(--gradient-hero);
   }
 }

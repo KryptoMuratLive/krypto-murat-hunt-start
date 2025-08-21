@@ -1,12 +1,171 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Link } from "react-router-dom";
+import { Play, Gamepad2, Coins } from "lucide-react";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Hero Section */}
+      <section className="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,165,0,0.1),transparent_70%)]" />
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <h1 className="comic-title mb-6">
+              Die Jagd hat begonnen
+            </h1>
+            
+            <div className="text-xl md:text-2xl font-bold text-foreground/90 mb-8">
+              KryptoMurat Live – Jagd auf den Bitcoin
+            </div>
+            
+            <p className="text-lg md:text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
+              Eine Web3-Serie, ein Spiel, eine Entscheidung.
+            </p>
+            
+            <Link to="/serie">
+              <Button 
+                size="lg" 
+                className="neon-glow text-lg px-8 py-6 font-bold uppercase tracking-wide hover:scale-105 transition-all duration-300"
+              >
+                Jetzt starten
+              </Button>
+            </Link>
+          </div>
+        </div>
+        
+        {/* Decorative elements */}
+        <div className="absolute top-20 left-10 w-20 h-20 border-4 border-primary/30 rounded-full animate-pulse" />
+        <div className="absolute bottom-32 right-16 w-16 h-16 border-4 border-secondary/30 rounded-full animate-pulse delay-1000" />
+        <div className="absolute top-1/3 right-20 w-12 h-12 border-4 border-accent/30 rounded-full animate-pulse delay-500" />
+      </section>
+
+      {/* Main Content Cards */}
+      <section className="py-20 px-4">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {/* Serie Card */}
+            <Link to="/serie" className="group">
+              <Card className="comic-card h-full">
+                <CardContent className="p-8 text-center space-y-6">
+                  <div className="w-20 h-20 mx-auto bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                    <Play className="w-10 h-10 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground">Serie ansehen</h3>
+                  <p className="text-muted-foreground">
+                    Folge KryptoMurat auf seiner epischen Jagd nach dem Bitcoin. 
+                    Erlebe die spannende Web3-Serie mit unerwarteten Wendungen.
+                  </p>
+                  <div className="pt-4">
+                    <Button variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      Zur Serie →
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* Game Card */}
+            <Link to="/game" className="group">
+              <Card className="comic-card h-full">
+                <CardContent className="p-8 text-center space-y-6">
+                  <div className="w-20 h-20 mx-auto bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transition-colors">
+                    <Gamepad2 className="w-10 h-10 text-secondary" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground">Spiel spielen</h3>
+                  <p className="text-muted-foreground">
+                    Werde selbst zum Jäger! Sammle Bitcoins, löse Rätsel und 
+                    treffe Entscheidungen, die den Verlauf der Geschichte beeinflussen.
+                  </p>
+                  <div className="pt-4">
+                    <Button variant="outline" className="group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
+                      Spiel starten →
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            {/* NFT Card */}
+            <Link to="/nft" className="group">
+              <Card className="comic-card h-full">
+                <CardContent className="p-8 text-center space-y-6">
+                  <div className="w-20 h-20 mx-auto bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-colors">
+                    <Coins className="w-10 h-10 text-accent" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-foreground">NFTs entdecken</h3>
+                  <p className="text-muted-foreground">
+                    Sichere dir exklusive KryptoMurat NFTs. Sammelkarten, 
+                    Charaktere und seltene Items aus dem KryptoMurat-Universum.
+                  </p>
+                  <div className="pt-4">
+                    <Button variant="outline" className="group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+                      NFTs ansehen →
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-card">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center space-y-6">
+            <h3 className="text-2xl font-bold text-foreground">
+              KryptoMurat Live
+            </h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              Folge der Jagd auf den sozialen Medien und verpasse keine Updates!
+            </p>
+            
+            <div className="flex justify-center space-x-6">
+              <a 
+                href="https://tiktok.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
+              >
+                <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">T</span>
+                </div>
+                <span>TikTok</span>
+              </a>
+              
+              <a 
+                href="https://instagram.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors"
+              >
+                <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">I</span>
+                </div>
+                <span>Instagram</span>
+              </a>
+              
+              <a 
+                href="https://x.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors"
+              >
+                <div className="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
+                  <span className="text-sm font-bold">X</span>
+                </div>
+                <span>X (Twitter)</span>
+              </a>
+            </div>
+            
+            <div className="pt-8 border-t border-border text-sm text-muted-foreground">
+              © 2024 KryptoMurat Live. Die Jagd geht weiter.
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
