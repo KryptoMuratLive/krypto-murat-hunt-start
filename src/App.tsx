@@ -13,6 +13,7 @@ import Live from "./pages/Live";
 import Vote from "./pages/Vote";
 import Episode from "./pages/Episode";
 import Universum from "./pages/Universum";
+import Whitepaper from "./pages/Whitepaper";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +29,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/nft" element={<NFT />} />
             <Route path="/universum" element={<Universum />} />
+            <Route path="/whitepaper" element={<Whitepaper />} />
             <Route 
               path="/serie" 
               element={
