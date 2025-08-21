@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Serie from "./pages/Serie";
 import Game from "./pages/Game";
 import NFT from "./pages/NFT";
+import Live from "./pages/Live";
 import Episode from "./pages/Episode";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/serie" element={<Serie />} />
           <Route path="/game" element={<Game />} />
           <Route path="/nft" element={<NFT />} />
+          <Route path="/live" element={<Live />} />
           <Route path="/folge/:id" element={<Episode />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
