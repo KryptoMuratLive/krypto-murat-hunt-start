@@ -12,6 +12,7 @@ import NFT from "./pages/NFT";
 import Live from "./pages/Live";
 import Vote from "./pages/Vote";
 import Episode from "./pages/Episode";
+import Universum from "./pages/Universum";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +27,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/nft" element={<NFT />} />
+            <Route path="/universum" element={<Universum />} />
             <Route 
               path="/serie" 
               element={

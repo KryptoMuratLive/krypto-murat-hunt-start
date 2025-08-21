@@ -47,75 +47,84 @@ const Index = () => {
         <div className="absolute top-1/3 right-20 w-12 h-12 border-4 border-accent/30 rounded-full animate-pulse delay-500" />
       </section>
 
-      {/* Main Content Cards */}
-      <section className="py-20 px-4">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Serie Card */}
-            <Link to="/serie" className="group">
-              <Card className="comic-card h-full">
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className="w-20 h-20 mx-auto bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                    <Play className="w-10 h-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground">Serie ansehen</h3>
-                  <p className="text-muted-foreground">
-                    Folge KryptoMurat auf seiner epischen Jagd nach dem Bitcoin. 
-                    Erlebe die spannende Web3-Serie mit unerwarteten Wendungen.
-                  </p>
-                  <div className="pt-4">
-                    <Button variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      Zur Serie →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+            {/* Main Content Cards */}
+            <section className="py-20 px-4">
+              <div className="container mx-auto">
+                <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                  {/* Serie Card */}
+                  <Link to="/serie" className="group">
+                    <Card className="comic-card h-full">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                          <Play className="w-8 h-8 text-primary" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Serie ansehen</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Folge KryptoMurat auf seiner epischen Jagd nach dem Bitcoin.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                          Zur Serie →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
 
-            {/* Game Card */}
-            <Link to="/game" className="group">
-              <Card className="comic-card h-full">
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className="w-20 h-20 mx-auto bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transition-colors">
-                    <Gamepad2 className="w-10 h-10 text-secondary" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground">Spiel spielen</h3>
-                  <p className="text-muted-foreground">
-                    Werde selbst zum Jäger! Sammle Bitcoins, löse Rätsel und 
-                    treffe Entscheidungen, die den Verlauf der Geschichte beeinflussen.
-                  </p>
-                  <div className="pt-4">
-                    <Button variant="outline" className="group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
-                      Spiel starten →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+                  {/* Game Card */}
+                  <Link to="/game" className="group">
+                    <Card className="comic-card h-full">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-secondary/20 rounded-full flex items-center justify-center group-hover:bg-secondary/30 transition-colors">
+                          <Gamepad2 className="w-8 h-8 text-secondary" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Spiel spielen</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Werde selbst zum Jäger! Sammle Bitcoins und treffe Entscheidungen.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">
+                          Spiel starten →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
 
-            {/* NFT Card */}
-            <Link to="/nft" className="group">
-              <Card className="comic-card h-full">
-                <CardContent className="p-8 text-center space-y-6">
-                  <div className="w-20 h-20 mx-auto bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-colors">
-                    <Coins className="w-10 h-10 text-accent" />
-                  </div>
-                  <h3 className="text-2xl font-bold text-foreground">NFTs entdecken</h3>
-                  <p className="text-muted-foreground">
-                    Sichere dir exklusive KryptoMurat NFTs. Sammelkarten, 
-                    Charaktere und seltene Items aus dem KryptoMurat-Universum.
-                  </p>
-                  <div className="pt-4">
-                    <Button variant="outline" className="group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
-                      NFTs ansehen →
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          </div>
-        </div>
-      </section>
+                  {/* NFT Card */}
+                  <Link to="/nft" className="group">
+                    <Card className="comic-card h-full">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-accent/20 rounded-full flex items-center justify-center group-hover:bg-accent/30 transition-colors">
+                          <Coins className="w-8 h-8 text-accent" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">NFTs entdecken</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Sichere dir exklusive KryptoMurat NFTs und Sammelkarten.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-accent group-hover:text-accent-foreground transition-colors">
+                          NFTs ansehen →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  {/* Universum Card */}
+                  <Link to="/universum" className="group">
+                    <Card className="comic-card h-full">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-muted/20 rounded-full flex items-center justify-center group-hover:bg-muted/30 transition-colors">
+                          <span className="text-2xl">🌌</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Universum</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Entdecke die Lore, Charaktere und Geheimnisse der Welt.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-muted group-hover:text-muted-foreground transition-colors">
+                          Entdecken →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </div>
+              </div>
+            </section>
 
       {/* Footer */}
       <footer className="border-t border-border bg-card">
