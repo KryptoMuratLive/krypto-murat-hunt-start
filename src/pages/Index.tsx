@@ -201,35 +201,38 @@ const Index = () => {
             </p>
             
             <div className="flex justify-center space-x-6">
-              <button 
-                onClick={() => window.open('https://www.tiktok.com/@kryptomuratlive', '_blank', 'noopener,noreferrer')}
-                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer bg-transparent border-none"
+              <Button 
+                variant="ghost"
+                onClick={() => window.open('https://www.tiktok.com/@kryptomuratlive', '_blank')}
+                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
               >
                 <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">T</span>
                 </div>
                 <span>TikTok</span>
-              </button>
+              </Button>
               
-              <button 
-                onClick={() => window.open('https://www.instagram.com/kryptomurat', '_blank', 'noopener,noreferrer')}
-                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors cursor-pointer bg-transparent border-none"
+              <Button 
+                variant="ghost"
+                onClick={() => window.open('https://www.instagram.com/kryptomurat', '_blank')}
+                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors"
               >
                 <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">I</span>
                 </div>
                 <span>Instagram</span>
-              </button>
+              </Button>
               
-              <button 
-                onClick={() => window.open('https://x.com/kryptomurat', '_blank', 'noopener,noreferrer')}
-                className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors cursor-pointer bg-transparent border-none"
+              <Button 
+                variant="ghost"
+                onClick={() => window.open('https://x.com/kryptomurat', '_blank')}
+                className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors"
               >
                 <div className="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">X</span>
                 </div>
                 <span>X (Twitter)</span>
-              </button>
+              </Button>
             </div>
             
             {/* Legal Links */}
