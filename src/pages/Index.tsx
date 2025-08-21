@@ -82,14 +82,14 @@ const Index = () => {
                   <Link to="/live" className="group">
                     <Card className="comic-card h-full">
                       <CardContent className="p-6 text-center space-y-4">
-                        <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
-                          <Radio className="w-8 h-8 text-red-500" />
+                        <div className="w-16 h-16 mx-auto bg-destructive/20 rounded-full flex items-center justify-center group-hover:bg-destructive/30 transition-colors">
+                          <Radio className="w-8 h-8 text-destructive" />
                         </div>
                         <h3 className="text-xl font-bold text-foreground">Live Stream</h3>
                         <p className="text-sm text-muted-foreground">
                           Schaue KryptoMurat live bei seiner Bitcoin-Jagd zu.
                         </p>
-                        <Button variant="outline" size="sm" className="group-hover:bg-red-500 group-hover:text-white transition-colors">
+                        <Button variant="outline" size="sm" className="group-hover:bg-destructive group-hover:text-destructive-foreground transition-colors">
                           Live starten →
                         </Button>
                       </CardContent>
