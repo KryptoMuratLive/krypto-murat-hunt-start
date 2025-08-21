@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { Play, Gamepad2, Coins } from "lucide-react";
+import { WalletWidget } from "@/components/WalletWidget";
 
 const Index = () => {
   return (
@@ -9,6 +10,11 @@ const Index = () => {
       {/* Hero Section */}
       <section className="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,165,0,0.1),transparent_70%)]" />
+        
+        {/* Wallet Widget in top right */}
+        <div className="absolute top-8 right-8 z-20">
+          <WalletWidget />
+        </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="max-w-4xl mx-auto space-y-8">
