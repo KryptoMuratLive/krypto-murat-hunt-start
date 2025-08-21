@@ -140,4 +140,13 @@ All colors MUST be HSL.
   .hero-bg {
     background: var(--gradient-hero);
   }
+  
+  @keyframes subtle-float {
+    0%, 100% { 
+      transform: scale(1.02) translateY(0px);
+    }
+    50% { 
+      transform: scale(1.05) translateY(-10px);
+    }
+  }
 }

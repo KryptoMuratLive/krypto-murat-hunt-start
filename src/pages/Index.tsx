@@ -8,8 +8,17 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="hero-bg relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,165,0,0.1),transparent_70%)]" />
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Animated Background */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-pulse"
+          style={{
+            backgroundImage: `url('/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png')`,
+            animation: 'subtle-float 6s ease-in-out infinite'
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,165,0,0.15),transparent_70%)]" />
         
         {/* Wallet Widget in top right */}
         <div className="absolute top-8 right-8 z-20">
