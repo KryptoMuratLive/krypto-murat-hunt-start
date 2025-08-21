@@ -14,12 +14,8 @@ const REQUIRED_NFT_ID = "1"; // Dummy NFT ID for testing
 type CameraType = "murat" | "jaeger";
 
 const Live = () => {
-  const address = useAddress();
-  const connectionStatus = useConnectionStatus();
-  const { contract } = useContract(NFT_GATE_CONTRACT);
-  const { data: nft, isLoading } = useNFT(contract, REQUIRED_NFT_ID);
   const [selectedCamera, setSelectedCamera] = useState<CameraType>("murat");
-  const [accessDialogOpen, setAccessDialogOpen] = useState(false);
+  const [showDemo, setShowDemo] = useState(true); // Demo-Modus für sofortigen Zugang
 
   // Livepeer Stream Configuration
   const streamKeys = {
@@ -32,46 +28,14 @@ const Live = () => {
     jaeger: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8"
   };
 
-  // Dummy NFT check for testing - accepts any connected wallet
-  const hasNFTAccess = address && connectionStatus === "connected";
-
   const handleCameraSwitch = (camera: CameraType) => {
-    if (!address || connectionStatus !== "connected") {
-      setAccessDialogOpen(true);
-      return;
-    }
-    
-    // In production, check actual NFT ownership here
-    if (!hasNFTAccess) {
-      setAccessDialogOpen(true);
-      return;
-    }
-    
     setSelectedCamera(camera);
   };
 
   const StreamPlayer = ({ camera }: { camera: CameraType }) => {
-    if (!hasNFTAccess) {
-      return (
-        <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <Lock className="w-16 h-16 mx-auto text-muted-foreground" />
-            <div>
-              <p className="text-lg font-semibold text-muted-foreground mb-2">
-                🔐 Exklusiver Zugang erforderlich
-              </p>
-              <p className="text-sm text-muted-foreground">
-                Verbinde deine Wallet zum Testen. (Dummy-NFT-Check aktiviert)
-              </p>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     return (
       <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-        {/* Livepeer HLS Stream */}
+        {/* Livepeer HLS Stream - DIREKT SICHTBAR */}
         <video 
           src={streamUrls[camera]}
           autoPlay
@@ -80,9 +44,15 @@ const Live = () => {
           controls
           className="w-full h-full object-cover"
           poster="/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png"
+          onError={(e) => {
+            console.error('Video failed to load:', e);
+            // Fallback to poster image
+          }}
         >
           <source src={streamUrls[camera]} type="application/x-mpegURL" />
-          Dein Browser unterstützt das Video-Element nicht.
+          <p className="text-white text-center mt-4">
+            Stream wird geladen... Falls nichts erscheint, prüfe die Netzwerkverbindung.
+          </p>
         </video>
         
         {/* Live indicator */}
@@ -109,10 +79,7 @@ const Live = () => {
                   {camera === "murat" ? "Murat's Perspektive" : "Jäger-Perspektive"}
                 </h4>
                 <p className="text-xs text-gray-300">
-                  {camera === "murat" 
-                    ? "Folge Murat auf seiner Bitcoin-Jagd" 
-                    : "Sieh durch die Augen der Verfolger"
-                  }
+                  Stream ID: {streamKeys[camera]}
                 </p>
               </div>
               <Badge className={camera === "murat" ? "bg-blue-600" : "bg-red-600"}>
@@ -124,43 +91,6 @@ const Live = () => {
       </div>
     );
   };
-
-  // Loading state
-  if (isLoading || connectionStatus === "connecting") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-muted-foreground">⏳ Verbinde mit Wallet...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // Not connected state
-  if (!address || connectionStatus !== "connected") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Card className="max-w-md mx-4 comic-card">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Wallet className="w-5 h-5" />
-              Wallet-Verbindung erforderlich
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-muted-foreground">
-              🔐 Bitte verbinde deine Wallet, um den Livestream zu sehen.
-            </p>
-            <Button onClick={() => setAccessDialogOpen(true)} className="w-full">
-              <Wallet className="w-4 h-4 mr-2" />
-              Wallet verbinden
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -174,10 +104,10 @@ const Live = () => {
           </Link>
           
           <h1 className="text-4xl font-bold text-foreground mb-4">
-            Livestream – Wähle deine Perspektive
+            🎥 KryptoMurat Live Stream
           </h1>
           <p className="text-xl text-muted-foreground mb-8">
-            Erlebe die Jagd in Echtzeit – durch die Augen der Jäger oder von Murat selbst.
+            Erlebe die Bitcoin-Jagd in Echtzeit! Stream läuft direkt ohne Wallet-Verbindung.
           </p>
         </div>
 
@@ -189,7 +119,7 @@ const Live = () => {
             className={`min-w-40 ${selectedCamera === "murat" ? "bg-blue-600 hover:bg-blue-700" : "border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"}`}
           >
             <Camera className="w-4 h-4 mr-2" />
-            Murat-Cam ansehen
+            Murat-Cam
           </Button>
           <Button
             variant={selectedCamera === "jaeger" ? "default" : "outline"}
@@ -197,7 +127,7 @@ const Live = () => {
             className={`min-w-40 ${selectedCamera === "jaeger" ? "bg-red-600 hover:bg-red-700" : "border-red-600 text-red-600 hover:bg-red-600 hover:text-white"}`}
           >
             <Camera className="w-4 h-4 mr-2" />
-            Jäger-Cam ansehen
+            Jäger-Cam
           </Button>
         </div>
 
@@ -210,82 +140,25 @@ const Live = () => {
           </Card>
         </div>
 
-        {/* Access Control Info */}
+        {/* Stream Info */}
         <Card className="max-w-2xl mx-auto mb-8 comic-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Deine aktuelle Perspektive
+              <Play className="w-5 h-5" />
+              Live Stream Info
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-medium">
-                  {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}
-                </p>
-                  <p className="text-sm text-muted-foreground">
-                    Dummy-NFT verifiziert ✅ - Test-Zugang gewährt
-                  </p>
-              </div>
-              <Badge className={selectedCamera === "murat" ? "bg-blue-600" : "bg-red-600"}>
-                Aktiv
-              </Badge>
+            <div className="space-y-2">
+              <p><strong>Aktive Kamera:</strong> {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}</p>
+              <p><strong>Stream ID:</strong> <code className="bg-muted px-2 py-1 rounded text-sm">{streamKeys[selectedCamera]}</code></p>
+              <p><strong>Status:</strong> <Badge className="bg-green-600">🔴 Live</Badge></p>
+              <p className="text-sm text-muted-foreground mt-4">
+                💡 Falls der Stream nicht lädt, liegt es möglicherweise an deiner Internetverbindung oder der Browser unterstützt HLS nicht.
+              </p>
             </div>
           </CardContent>
         </Card>
-
-        {/* Bottom Info */}
-        <div className="text-center space-y-6">
-          <div className="max-w-2xl mx-auto">
-            <p className="text-lg text-muted-foreground mb-6">
-              Dein NFT bestimmt, wie du die Geschichte erlebst.
-            </p>
-            <Link to="/nft">
-              <Button size="lg" className="neon-glow">
-                <Lock className="w-5 h-5 mr-2" />
-                Jetzt NFT freischalten
-              </Button>
-            </Link>
-          </div>
-        </div>
-
-        {/* Access Denied Dialog */}
-        <Dialog open={accessDialogOpen} onOpenChange={setAccessDialogOpen}>
-          <DialogContent className="comic-card">
-            <DialogHeader>
-              <DialogTitle className="flex items-center gap-2">
-                <Lock className="w-5 h-5" />
-                Wallet-Verbindung & NFT erforderlich
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
-            <p className="text-muted-foreground">
-              Zum Testen: Jede verbundene Wallet erhält automatisch Zugang (Dummy-NFT-Modus).
-            </p>
-              <div className="p-4 bg-muted rounded-lg">
-                <h4 className="font-semibold mb-2">Voraussetzungen:</h4>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Ethereum/Polygon-kompatible Wallet (MetaMask, Coinbase, WalletConnect)</li>
-                  <li>• 🧪 Test-Modus: Dummy-NFT automatisch verfügbar</li>
-                  <li>• Livepeer Stream: {streamKeys.murat}</li>
-                </ul>
-              </div>
-              <div className="flex gap-3">
-                <Link to="/nft" className="flex-1">
-                  <Button className="w-full">
-                    <Lock className="w-4 h-4 mr-2" />
-                    NFT-Pass kaufen
-                  </Button>
-                </Link>
-                <Button variant="outline" className="flex-1" onClick={() => setAccessDialogOpen(false)}>
-                  <Wallet className="w-4 h-4 mr-2" />
-                  Schließen
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
       </div>
     </div>
   );
