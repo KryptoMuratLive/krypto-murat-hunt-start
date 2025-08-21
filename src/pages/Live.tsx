@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Camera, Users, Play, Lock, Eye, Wallet, AlertCircle } from "lucide-react";
+import LivestreamSubtitles from "@/components/LivestreamSubtitles";
 
 // NFT Gate Configuration (Dummy for testing)
 const NFT_GATE_CONTRACT = "0x0000000000000000000000000000000000000000"; // Dummy contract for testing
@@ -160,6 +161,9 @@ const Live = () => {
           </CardContent>
         </Card>
       </div>
+      
+      {/* Live Subtitles Overlay */}
+      <LivestreamSubtitles />
     </div>
   );
 };
