@@ -202,7 +202,7 @@ const Index = () => {
             
             <div className="flex justify-center space-x-6">
               <a 
-                href="https://tiktok.com" 
+                href="https://www.tiktok.com/@kryptomuratlive" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
@@ -214,7 +214,7 @@ const Index = () => {
               </a>
               
               <a 
-                href="https://instagram.com" 
+                href="https://www.instagram.com/kryptomurat" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors"
@@ -226,7 +226,7 @@ const Index = () => {
               </a>
               
               <a 
-                href="https://x.com" 
+                href="https://x.com/kryptomurat" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors"
