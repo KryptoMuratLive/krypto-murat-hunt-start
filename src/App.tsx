@@ -14,6 +14,7 @@ import Vote from "./pages/Vote";
 import Episode from "./pages/Episode";
 import Universum from "./pages/Universum";
 import Whitepaper from "./pages/Whitepaper";
+import Impressum from "./pages/Impressum";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/nft" element={<NFT />} />
             <Route path="/universum" element={<Universum />} />
             <Route path="/whitepaper" element={<Whitepaper />} />
+            <Route path="/impressum" element={<Impressum />} />
             <Route 
               path="/serie" 
               element={
