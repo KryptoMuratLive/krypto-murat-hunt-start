@@ -15,6 +15,7 @@ import Episode from "./pages/Episode";
 import Universum from "./pages/Universum";
 import Whitepaper from "./pages/Whitepaper";
 import Impressum from "./pages/Impressum";
+import Datenschutz from "./pages/Datenschutz";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
             <Route path="/universum" element={<Universum />} />
             <Route path="/whitepaper" element={<Whitepaper />} />
             <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
             <Route 
               path="/serie" 
               element={
