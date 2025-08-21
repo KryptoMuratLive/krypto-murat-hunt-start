@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Play, Gamepad2, Coins } from "lucide-react";
+import { Play, Gamepad2, Coins, Radio } from "lucide-react";
 import { WalletWidget } from "@/components/WalletWidget";
 
 const Index = () => {
@@ -59,7 +59,7 @@ const Index = () => {
             {/* Main Content Cards */}
             <section className="py-20 px-4">
               <div className="container mx-auto">
-                <div className="grid md:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <div className="grid md:grid-cols-5 gap-6 max-w-7xl mx-auto">
                   {/* Serie Card */}
                   <Link to="/serie" className="group">
                     <Card className="comic-card h-full">
@@ -73,6 +73,24 @@ const Index = () => {
                         </p>
                         <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                           Zur Serie →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+
+                  {/* Live Stream Card */}
+                  <Link to="/live" className="group">
+                    <Card className="comic-card h-full">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-full flex items-center justify-center group-hover:bg-red-500/30 transition-colors">
+                          <Radio className="w-8 h-8 text-red-500" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Live Stream</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Schaue KryptoMurat live bei seiner Bitcoin-Jagd zu.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-red-500 group-hover:text-white transition-colors">
+                          Live starten →
                         </Button>
                       </CardContent>
                     </Card>
