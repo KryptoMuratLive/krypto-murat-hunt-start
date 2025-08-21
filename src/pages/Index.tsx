@@ -204,6 +204,22 @@ const Index = () => {
               </a>
             </div>
             
+            {/* Legal Links */}
+            <div className="flex justify-center space-x-6 pt-6">
+              <Link 
+                to="/impressum" 
+                className="text-sm text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Impressum
+              </Link>
+              <Link 
+                to="/datenschutz" 
+                className="text-sm text-muted-foreground hover:text-primary transition-colors underline"
+              >
+                Datenschutz
+              </Link>
+            </div>
+            
             <div className="pt-8 border-t border-border text-sm text-muted-foreground">
               © 2024 KryptoMurat Live. Die Jagd geht weiter.
             </div>
