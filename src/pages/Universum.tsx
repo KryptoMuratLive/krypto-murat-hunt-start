@@ -158,7 +158,7 @@ const characters: Character[] = [
 const locations = [
   {
     id: 1,
-    name: "Checkpoint Münster",
+    name: "Checkpoint Bielefeld",
     description: "Der Ort, an dem alles begann. Ein verlassener Krypto-Mining-Komplex am Stadtrand.",
     significance: "Hier entdeckte Murat die ersten Hinweise auf den legendären Bitcoin-Schatz."
   },
@@ -192,7 +192,7 @@ const timeline = [
   {
     episode: "Folge 1",
     title: "Die Entdeckung",
-    description: "Ein geheimnisvoller Hinweis führt Murat nach Münster.",
+    description: "Ein geheimnisvoller Hinweis führt Murat nach Bielefeld.",
     significance: "Der Beginn der eigentlichen Jagd und erste Begegnung mit den Jägern."
   },
   {
