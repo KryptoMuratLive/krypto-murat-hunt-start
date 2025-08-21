@@ -100,8 +100,7 @@ export default function Whitepaper() {
             Das Herz des Projekts
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Verstehe KryptoMurat Live – von der Vision bis zur Umsetzung. 
-            Alles erklärt, ohne Krypto-Blabla.
+            Das Herz des Projekts – transparent und verständlich erklärt.
           </p>
         </div>
       </section>
