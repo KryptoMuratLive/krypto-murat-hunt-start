@@ -205,7 +205,7 @@ const Index = () => {
                 href="https://www.tiktok.com/@kryptomuratlive" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-primary transition-colors cursor-pointer"
               >
                 <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">T</span>
@@ -217,7 +217,7 @@ const Index = () => {
                 href="https://www.instagram.com/kryptomurat" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-accent transition-colors cursor-pointer"
               >
                 <div className="w-8 h-8 bg-accent/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">I</span>
@@ -229,7 +229,7 @@ const Index = () => {
                 href="https://x.com/kryptomurat" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors"
+                className="flex items-center space-x-2 text-muted-foreground hover:text-secondary transition-colors cursor-pointer"
               >
                 <div className="w-8 h-8 bg-secondary/20 rounded-full flex items-center justify-center">
                   <span className="text-sm font-bold">X</span>
