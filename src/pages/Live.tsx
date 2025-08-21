@@ -1,24 +1,43 @@
-import { useState } from "react";
+import { useAddress, useContract, useNFT, useConnectionStatus } from "@thirdweb-dev/react";
+import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Camera, Users, Play, Lock, Eye, Wallet } from "lucide-react";
+import { ArrowLeft, Camera, Users, Play, Lock, Eye, Wallet, AlertCircle } from "lucide-react";
 
-type CameraType = "murat" | "jaeger" | null;
+// NFT Gate Configuration
+const NFT_GATE_CONTRACT = "0xc4D64540D638138D142115F97A559024c9ba2bc0"; // Replace with actual NFT contract address
+const REQUIRED_NFT_ID = "1"; // ID des NFT-Passes (z. B. Serien-Pass)
+
+type CameraType = "murat" | "jaeger";
 
 const Live = () => {
-  const [selectedCamera, setSelectedCamera] = useState<CameraType>(null);
-  const [hasNFT, setHasNFT] = useState(false); // This would be checked via wallet connection
+  const address = useAddress();
+  const connectionStatus = useConnectionStatus();
+  const { contract } = useContract(NFT_GATE_CONTRACT);
+  const { data: nft, isLoading } = useNFT(contract, REQUIRED_NFT_ID);
+  const [selectedCamera, setSelectedCamera] = useState<CameraType>("murat");
   const [accessDialogOpen, setAccessDialogOpen] = useState(false);
 
+  // Stream IDs für Livepeer (using simple video for demo)
+  const streamKeys = {
+    murat: "/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png", // Replace with actual Stream ID from Livepeer
+    jaeger: "/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png"  // Replace with actual Stream ID from Livepeer
+  };
+
+  // For demo purposes, assume user has NFT if connected
+  const hasNFTAccess = address && connectionStatus === "connected";
+
   const handleCameraSwitch = (camera: CameraType) => {
-    // Check NFT access for the selected camera
-    const needsMuratNFT = camera === "murat";
-    const needsJaegerNFT = camera === "jaeger";
+    if (!address || connectionStatus !== "connected") {
+      setAccessDialogOpen(true);
+      return;
+    }
     
-    if ((needsMuratNFT || needsJaegerNFT) && !hasNFT) {
+    // In production, check actual NFT ownership here
+    if (!hasNFTAccess) {
       setAccessDialogOpen(true);
       return;
     }
@@ -27,12 +46,19 @@ const Live = () => {
   };
 
   const StreamPlayer = ({ camera }: { camera: CameraType }) => {
-    if (!camera) {
+    if (!hasNFTAccess) {
       return (
         <div className="aspect-video bg-muted rounded-lg flex items-center justify-center">
           <div className="text-center space-y-4">
-            <Camera className="w-16 h-16 mx-auto text-muted-foreground" />
-            <p className="text-lg text-muted-foreground">Wähle eine Kamera-Perspektive</p>
+            <Lock className="w-16 h-16 mx-auto text-muted-foreground" />
+            <div>
+              <p className="text-lg font-semibold text-muted-foreground mb-2">
+                🔐 Exklusiver Zugang erforderlich
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Verbinde deine Wallet und stelle sicher, dass du den erforderlichen NFT-Pass besitzt.
+              </p>
+            </div>
           </div>
         </div>
       );
@@ -40,32 +66,22 @@ const Live = () => {
 
     return (
       <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-        {/* Placeholder for actual stream */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center space-y-4">
-            <div className={`w-20 h-20 rounded-full ${camera === "murat" ? "bg-blue-600" : "bg-red-600"} flex items-center justify-center mx-auto`}>
-              <Play className="w-8 h-8 text-white ml-1" />
-            </div>
-            <div className="text-white">
-              <h3 className="text-xl font-bold mb-2">
-                {camera === "murat" ? "Murat-Cam" : "Jäger-Cam"} - LIVE
-              </h3>
-              <p className="text-sm text-gray-300">
-                Stream wird geladen... (Livepeer Integration folgt)
-              </p>
-            </div>
-          </div>
-        </div>
+        {/* Video placeholder for now - replace with Livepeer Player */}
+        <img 
+          src={streamKeys[camera]} 
+          alt={`${camera} stream`}
+          className="w-full h-full object-cover"
+        />
         
         {/* Live indicator */}
-        <div className="absolute top-4 left-4">
+        <div className="absolute top-4 left-4 z-10">
           <Badge className="bg-red-500 text-white animate-pulse">
             🔴 LIVE
           </Badge>
         </div>
 
         {/* Viewer count */}
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-4 right-4 z-10">
           <Badge variant="secondary" className="bg-black/50 text-white">
             <Users className="w-3 h-3 mr-1" />
             1,337 Zuschauer
@@ -73,7 +89,7 @@ const Live = () => {
         </div>
 
         {/* Camera info overlay */}
-        <div className="absolute bottom-4 left-4 right-4">
+        <div className="absolute bottom-4 left-4 right-4 z-10">
           <div className="bg-black/70 backdrop-blur-sm rounded-lg p-3">
             <div className="flex items-center justify-between">
               <div>
@@ -96,6 +112,43 @@ const Live = () => {
       </div>
     );
   };
+
+  // Loading state
+  if (isLoading || connectionStatus === "connecting") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-muted-foreground">⏳ Verbinde mit Wallet...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Not connected state
+  if (!address || connectionStatus !== "connected") {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <Card className="max-w-md mx-4 comic-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Wallet className="w-5 h-5" />
+              Wallet-Verbindung erforderlich
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-muted-foreground">
+              🔐 Bitte verbinde deine Wallet, um den Livestream zu sehen.
+            </p>
+            <Button onClick={() => setAccessDialogOpen(true)} className="w-full">
+              <Wallet className="w-4 h-4 mr-2" />
+              Wallet verbinden
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -146,34 +199,29 @@ const Live = () => {
         </div>
 
         {/* Access Control Info */}
-        {selectedCamera && (
-          <Card className="max-w-2xl mx-auto mb-8 comic-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Eye className="w-5 h-5" />
-                Deine aktuelle Perspektive
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="font-medium">
-                    {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    {selectedCamera === "murat" 
-                      ? "Benötigt: Murat-NFT oder Standard-Pass" 
-                      : "Benötigt: Jäger-NFT oder Premium-Pass"
-                    }
-                  </p>
-                </div>
-                <Badge className={selectedCamera === "murat" ? "bg-blue-600" : "bg-red-600"}>
-                  Aktiv
-                </Badge>
+        <Card className="max-w-2xl mx-auto mb-8 comic-card">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Eye className="w-5 h-5" />
+              Deine aktuelle Perspektive
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-medium">
+                  {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  NFT-Pass verifiziert ✅ - Vollzugang gewährt
+                </p>
               </div>
-            </CardContent>
-          </Card>
-        )}
+              <Badge className={selectedCamera === "murat" ? "bg-blue-600" : "bg-red-600"}>
+                Aktiv
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Bottom Info */}
         <div className="text-center space-y-6">
@@ -196,30 +244,31 @@ const Live = () => {
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
                 <Lock className="w-5 h-5" />
-                Exklusiver Zugang erforderlich
+                Wallet-Verbindung & NFT erforderlich
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
               <p className="text-muted-foreground">
-                Diese Perspektive ist exklusiv für bestimmte NFT-Holder.
+                Um den Livestream zu sehen, benötigst du eine Wallet-Verbindung und den entsprechenden NFT-Pass.
               </p>
               <div className="p-4 bg-muted rounded-lg">
-                <h4 className="font-semibold mb-2">Benötigt für diese Kamera:</h4>
+                <h4 className="font-semibold mb-2">Voraussetzungen:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
-                  <li>• Entsprechendes Team-NFT</li>
-                  <li>• Premium-Pass</li>
-                  <li>• Oder: Wallet mit Berechtigung</li>
+                  <li>• Ethereum/Polygon-kompatible Wallet (MetaMask, Coinbase, WalletConnect)</li>
+                  <li>• KryptoMurat Serienpass NFT (Contract: {NFT_GATE_CONTRACT})</li>
+                  <li>• Aktive Blockchain-Verbindung</li>
                 </ul>
               </div>
               <div className="flex gap-3">
                 <Link to="/nft" className="flex-1">
                   <Button className="w-full">
-                    NFT kaufen
+                    <Lock className="w-4 h-4 mr-2" />
+                    NFT-Pass kaufen
                   </Button>
                 </Link>
                 <Button variant="outline" className="flex-1" onClick={() => setAccessDialogOpen(false)}>
                   <Wallet className="w-4 h-4 mr-2" />
-                  Wallet verbinden
+                  Schließen
                 </Button>
               </div>
             </div>

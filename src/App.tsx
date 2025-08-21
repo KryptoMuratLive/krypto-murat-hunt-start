@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Web3Provider } from "@/contexts/Web3Provider";
+import { CustomThirdwebProvider } from "@/contexts/ThirdwebProvider";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Serie from "./pages/Serie";
@@ -25,7 +26,8 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <Web3Provider>
-      <TooltipProvider>
+      <CustomThirdwebProvider>
+        <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
@@ -83,8 +85,9 @@ const App = () => (
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </Web3Provider>
-  </QueryClientProvider>
+    </CustomThirdwebProvider>
+  </Web3Provider>
+</QueryClientProvider>
 );
 
 export default App;
