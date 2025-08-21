@@ -7,9 +7,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Link } from "react-router-dom";
 import { ArrowLeft, Camera, Users, Play, Lock, Eye, Wallet, AlertCircle } from "lucide-react";
 
-// NFT Gate Configuration
-const NFT_GATE_CONTRACT = "0xc4D64540D638138D142115F97A559024c9ba2bc0"; // Replace with actual NFT contract address
-const REQUIRED_NFT_ID = "1"; // ID des NFT-Passes (z. B. Serien-Pass)
+// NFT Gate Configuration (Dummy for testing)
+const NFT_GATE_CONTRACT = "0x0000000000000000000000000000000000000000"; // Dummy contract for testing
+const REQUIRED_NFT_ID = "1"; // Dummy NFT ID for testing
 
 type CameraType = "murat" | "jaeger";
 
@@ -21,13 +21,18 @@ const Live = () => {
   const [selectedCamera, setSelectedCamera] = useState<CameraType>("murat");
   const [accessDialogOpen, setAccessDialogOpen] = useState(false);
 
-  // Stream IDs für Livepeer (using simple video for demo)
+  // Livepeer Stream Configuration
   const streamKeys = {
-    murat: "/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png", // Replace with actual Stream ID from Livepeer
-    jaeger: "/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png"  // Replace with actual Stream ID from Livepeer
+    murat: "029feh9xp563f1nv", // Livepeer Playback ID
+    jaeger: "029feh9xp563f1nv"  // Using same stream for both cameras for demo
   };
 
-  // For demo purposes, assume user has NFT if connected
+  const streamUrls = {
+    murat: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8",
+    jaeger: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8"
+  };
+
+  // Dummy NFT check for testing - accepts any connected wallet
   const hasNFTAccess = address && connectionStatus === "connected";
 
   const handleCameraSwitch = (camera: CameraType) => {
@@ -56,7 +61,7 @@ const Live = () => {
                 🔐 Exklusiver Zugang erforderlich
               </p>
               <p className="text-sm text-muted-foreground">
-                Verbinde deine Wallet und stelle sicher, dass du den erforderlichen NFT-Pass besitzt.
+                Verbinde deine Wallet zum Testen. (Dummy-NFT-Check aktiviert)
               </p>
             </div>
           </div>
@@ -66,12 +71,19 @@ const Live = () => {
 
     return (
       <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-        {/* Video placeholder for now - replace with Livepeer Player */}
-        <img 
-          src={streamKeys[camera]} 
-          alt={`${camera} stream`}
+        {/* Livepeer HLS Stream */}
+        <video 
+          src={streamUrls[camera]}
+          autoPlay
+          muted
+          loop
+          controls
           className="w-full h-full object-cover"
-        />
+          poster="/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png"
+        >
+          <source src={streamUrls[camera]} type="application/x-mpegURL" />
+          Dein Browser unterstützt das Video-Element nicht.
+        </video>
         
         {/* Live indicator */}
         <div className="absolute top-4 left-4 z-10">
@@ -212,9 +224,9 @@ const Live = () => {
                 <p className="font-medium">
                   {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}
                 </p>
-                <p className="text-sm text-muted-foreground">
-                  NFT-Pass verifiziert ✅ - Vollzugang gewährt
-                </p>
+                  <p className="text-sm text-muted-foreground">
+                    Dummy-NFT verifiziert ✅ - Test-Zugang gewährt
+                  </p>
               </div>
               <Badge className={selectedCamera === "murat" ? "bg-blue-600" : "bg-red-600"}>
                 Aktiv
@@ -248,15 +260,15 @@ const Live = () => {
               </DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <p className="text-muted-foreground">
-                Um den Livestream zu sehen, benötigst du eine Wallet-Verbindung und den entsprechenden NFT-Pass.
-              </p>
+            <p className="text-muted-foreground">
+              Zum Testen: Jede verbundene Wallet erhält automatisch Zugang (Dummy-NFT-Modus).
+            </p>
               <div className="p-4 bg-muted rounded-lg">
                 <h4 className="font-semibold mb-2">Voraussetzungen:</h4>
                 <ul className="text-sm text-muted-foreground space-y-1">
                   <li>• Ethereum/Polygon-kompatible Wallet (MetaMask, Coinbase, WalletConnect)</li>
-                  <li>• KryptoMurat Serienpass NFT (Contract: {NFT_GATE_CONTRACT})</li>
-                  <li>• Aktive Blockchain-Verbindung</li>
+                  <li>• 🧪 Test-Modus: Dummy-NFT automatisch verfügbar</li>
+                  <li>• Livepeer Stream: {streamKeys.murat}</li>
                 </ul>
               </div>
               <div className="flex gap-3">

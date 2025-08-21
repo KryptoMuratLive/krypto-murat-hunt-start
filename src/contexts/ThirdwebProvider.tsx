@@ -2,7 +2,7 @@ import { ThirdwebProvider, metamaskWallet, coinbaseWallet, walletConnect } from 
 import { Ethereum, Polygon } from '@thirdweb-dev/chains';
 import { ReactNode } from 'react';
 
-const clientId = 'kryptomurat-live-client'; // Replace with your actual client ID
+const clientId = 'demo-client-id'; // Demo client ID for testing
 
 interface CustomThirdwebProviderProps {
   children: ReactNode;
