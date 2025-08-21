@@ -1,20 +1,32 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Wallet, Unlink, Shield } from "lucide-react";
-import { useWallet } from "@/hooks/useWallet";
+import { Wallet, Unlink, Shield, Crown, Zap } from "lucide-react";
+import { useWallet, AccessLevel } from "@/hooks/useWallet";
 import { useState } from "react";
+
+const getAccessIcon = (level: AccessLevel) => {
+  switch (level) {
+    case 'jaeger': return <Zap className="w-4 h-4" />;
+    case 'premium': return <Crown className="w-4 h-4" />;
+    case 'standard': return <Shield className="w-4 h-4" />;
+    default: return <Shield className="w-4 h-4 opacity-50" />;
+  }
+};
 
 export const WalletWidget = () => {
   const { 
     address, 
     isConnected, 
     isConnecting, 
-    hasRequiredNFT, 
+    accessLevel,
+    hasAnyNFT,
     isCheckingNFT,
     connectWallet, 
     disconnect, 
-    formatAddress 
+    formatAddress,
+    getAccessLevelLabel,
+    getAccessLevelColor
   } = useWallet();
   
   const [showDetails, setShowDetails] = useState(false);
@@ -44,31 +56,51 @@ export const WalletWidget = () => {
       >
         <Wallet className="w-4 h-4 mr-2" />
         {formatAddress}
-        {hasRequiredNFT && (
-          <Badge variant="secondary" className="ml-2 text-xs">
-            NFT ✓
+        {hasAnyNFT && (
+          <Badge variant="secondary" className="ml-2 text-xs flex items-center space-x-1">
+            {getAccessIcon(accessLevel)}
+            <span className="ml-1">NFT</span>
           </Badge>
         )}
       </Button>
       
       {showDetails && (
         <Card className="absolute right-0 top-full mt-2 w-80 z-50 comic-card">
-          <CardContent className="p-4 space-y-3">
+          <CardContent className="p-4 space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Wallet verbunden</p>
                 <p className="text-xs text-muted-foreground font-mono">{address}</p>
               </div>
-              <Shield className={`w-5 h-5 ${hasRequiredNFT ? 'text-secondary' : 'text-muted-foreground'}`} />
+              {getAccessIcon(accessLevel)}
             </div>
             
-            <div className="flex items-center space-x-2">
-              <Badge variant={hasRequiredNFT ? "default" : "destructive"}>
-                {isCheckingNFT ? "Überprüfe..." : hasRequiredNFT ? "NFT verifiziert" : "Kein NFT"}
-              </Badge>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-sm">Zugangsebene:</span>
+                <Badge 
+                  variant={hasAnyNFT ? "default" : "destructive"}
+                  className={`${getAccessLevelColor(accessLevel)} text-xs`}
+                >
+                  {isCheckingNFT ? "Überprüfe..." : getAccessLevelLabel(accessLevel)}
+                </Badge>
+              </div>
+              
+              {hasAnyNFT && (
+                <div className="text-xs text-muted-foreground bg-muted/30 p-2 rounded">
+                  <div className="flex items-center space-x-2">
+                    {getAccessIcon(accessLevel)}
+                    <span>
+                      {accessLevel === 'jaeger' && 'Vollzugang zu allen Bereichen'}
+                      {accessLevel === 'premium' && 'Zugang zu Premium-Features'}
+                      {accessLevel === 'standard' && 'Zugang zu Standard-Features'}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
             
-            {!hasRequiredNFT && (
+            {!hasAnyNFT && (
               <p className="text-xs text-muted-foreground">
                 Kaufe ein NFT für Zugang zu geschützten Bereichen
               </p>
@@ -78,15 +110,18 @@ export const WalletWidget = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => disconnect()}
+                onClick={() => {
+                  disconnect();
+                  setShowDetails(false);
+                }}
                 className="flex-1"
               >
                 <Unlink className="w-3 h-3 mr-1" />
                 Trennen
               </Button>
-              {!hasRequiredNFT && (
+              {!hasAnyNFT && (
                 <Button size="sm" variant="secondary" asChild className="flex-1">
-                  <a href="/nft">NFT kaufen</a>
+                  <a href="/nft">NFTs ansehen</a>
                 </Button>
               )}
             </div>

@@ -29,7 +29,7 @@ const App = () => (
             <Route 
               path="/serie" 
               element={
-                <ProtectedRoute requireNFT={true}>
+                <ProtectedRoute requiredAccessLevel="standard">
                   <Serie />
                 </ProtectedRoute>
               } 
@@ -37,7 +37,7 @@ const App = () => (
             <Route 
               path="/game" 
               element={
-                <ProtectedRoute requireNFT={true}>
+                <ProtectedRoute requiredAccessLevel="standard">
                   <Game />
                 </ProtectedRoute>
               } 
@@ -45,7 +45,7 @@ const App = () => (
             <Route 
               path="/live" 
               element={
-                <ProtectedRoute requireNFT={false}>
+                <ProtectedRoute allowedLevels={['standard', 'premium', 'jaeger']}>
                   <Live />
                 </ProtectedRoute>
               } 
@@ -53,7 +53,7 @@ const App = () => (
             <Route 
               path="/vote" 
               element={
-                <ProtectedRoute requireNFT={true}>
+                <ProtectedRoute requiredAccessLevel="premium">
                   <Vote />
                 </ProtectedRoute>
               } 
@@ -61,7 +61,7 @@ const App = () => (
             <Route 
               path="/folge/:id" 
               element={
-                <ProtectedRoute requireNFT={true}>
+                <ProtectedRoute requiredAccessLevel="standard">
                   <Episode />
                 </ProtectedRoute>
               } 
