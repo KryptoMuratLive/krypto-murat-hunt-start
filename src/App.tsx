@@ -45,7 +45,7 @@ const App = () => (
             <Route 
               path="/serie" 
               element={
-                <ProtectedRoute requiredAccessLevel="standard">
+                <ProtectedRoute requiredAccessLevel="token">
                   <Serie />
                 </ProtectedRoute>
               } 
@@ -53,7 +53,7 @@ const App = () => (
             <Route 
               path="/game" 
               element={
-                <ProtectedRoute requiredAccessLevel="standard">
+                <ProtectedRoute requiredAccessLevel="token">
                   <Game />
                 </ProtectedRoute>
               } 
@@ -61,10 +61,10 @@ const App = () => (
             <Route 
               path="/live" 
               element={
-                <ProtectedRoute allowedLevels={['standard', 'premium', 'jaeger']}>
+                <ProtectedRoute requiredAccessLevel="token">
                   <Live />
                 </ProtectedRoute>
-              } 
+              }
             />
             <Route 
               path="/vote" 
@@ -77,7 +77,7 @@ const App = () => (
             <Route 
               path="/folge/:id" 
               element={
-                <ProtectedRoute requiredAccessLevel="standard">
+                <ProtectedRoute requiredAccessLevel="token">
                   <Episode />
                 </ProtectedRoute>
               } 

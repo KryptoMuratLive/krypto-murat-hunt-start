@@ -54,8 +54,8 @@ export const ProtectedRoute = ({
       return allowedLevels.includes(accessLevel);
     }
     
-    // Check hierarchy: jaeger > premium > standard > none
-    const levels: AccessLevel[] = ['none', 'standard', 'premium', 'jaeger'];
+    // Check hierarchy: jaeger > premium > standard > token > none
+    const levels: AccessLevel[] = ['none', 'token', 'standard', 'premium', 'jaeger'];
     const userLevelIndex = levels.indexOf(accessLevel);
     const requiredLevelIndex = levels.indexOf(requiredAccessLevel);
     

@@ -57,12 +57,13 @@ export const useWallet = () => {
 
   const isCheckingNFT = isCheckingStandard || isCheckingPremium || isCheckingJaeger;
 
-  // Determine access level based on NFT ownership and token holding (highest level wins)
+  // Determine access level based on NFT ownership and token holding (Beta: Any MURAT holder gets access)
   const getAccessLevel = (): AccessLevel => {
     if (jaegerBalance && Number(jaegerBalance) > 0) return 'jaeger';
     if (premiumBalance && Number(premiumBalance) > 0) return 'premium';
     if (standardBalance && Number(standardBalance) > 0) return 'standard';
-    if (hasMinimumTokens && hasMinimumTokens(10)) return 'token';
+    // Beta: Any MURAT token holder gets "token" access level
+    if (hasMinimumTokens && hasMinimumTokens(0.1)) return 'token';
     return 'none';
   };
 
