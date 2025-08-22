@@ -323,6 +323,143 @@ export default function Whitepaper() {
           </Card>
         </section>
 
+        {/* Roadmap Section */}
+        <section>
+          <Card className="comic-card">
+            <CardHeader>
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
+                  <Target className="w-6 h-6 text-accent" />
+                </div>
+                <CardTitle className="text-3xl">Roadmap für das MURAT-Projekt</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-8">
+                
+                {/* Phase 1 */}
+                <div className="relative">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="font-bold text-primary">01</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold mb-2">Phase 1 – Konzept & Fundament</h4>
+                      <Badge className="mb-4 bg-primary text-white">Q3 2025</Badge>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Veröffentlichung des Whitepapers (mehrsprachig: DE/EN/TR)</li>
+                        <li>• Finalisierung des MURAT-Token Smart Contracts (1 Mrd. Supply, 1% Treasury, 1% Burn)</li>
+                        <li>• Deployment auf Polygon (erste Chain, Multichain später möglich)</li>
+                        <li>• Aufbau der Plattform (Lovable + Vercel)</li>
+                        <li>• NFT-Kartenspiel „Jagd auf den Bitcoin" → erste Beta-Version</li>
+                        <li>• Start Community-Building (Telegram, X, TikTok, Discord)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phase 2 */}
+                <div className="relative">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-secondary/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="font-bold text-secondary">02</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold mb-2">Phase 2 – Community & Utility</h4>
+                      <Badge className="mb-4 bg-secondary text-white">Q4 2025</Badge>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Launch des AccessPass (ERC1155) für Serien- & Spielzugang</li>
+                        <li>• Staking-Programm im MuratLockVault (30/90/180/360 Tage mit Multiplikatoren)</li>
+                        <li>• Integration von Livepeer-Streaming auf kryptomur.at</li>
+                        <li>• NFT-Pass für exklusive Inhalte (z. B. Livestream-Kameras, Bonuskarten im Game)</li>
+                        <li>• Erste Partnerschaften (Influencer & kleinere Krypto-Communities)</li>
+                        <li>• Listing auf DEX (Uniswap/QuickSwap) mit Liquidity Pool</li>
+                        <li>• Start Community-Voting: Einfluss auf Storyline & Spielentwicklung</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phase 3 */}
+                <div className="relative">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="font-bold text-accent">03</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold mb-2">Phase 3 – Expansion & Reichweite</h4>
+                      <Badge className="mb-4 bg-accent text-white">Q1 2026</Badge>
+                      <ul className="space-y-2 text-sm">
+                        <li>• NFT-Galerie + Minting-Seite (alle Karten & Sammlerstücke)</li>
+                        <li>• Launch der Mini-Serie inkl. interaktiver Zuschauerentscheidungen</li>
+                        <li>• Multi-Language Livestreams mit KI-Übersetzung (Deutsch → EN, TR, ES, ZH)</li>
+                        <li>• Marketing-Kampagne („Jagd auf den Bitcoin" als virales Meme + Game)</li>
+                        <li>• Erste Kooperationen mit GameFi- oder Meme-Projekten</li>
+                        <li>• DEX-Liquidität erhöhen (Community Pools, Incentives)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phase 4 */}
+                <div className="relative">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-muted-foreground/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="font-bold text-muted-foreground">04</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold mb-2">Phase 4 – Adoption & Listing</h4>
+                      <Badge className="mb-4 bg-muted-foreground text-white">Q2 2026</Badge>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Launch des Community-Hubs (Chat, Voting, Rewards, Leaderboard)</li>
+                        <li>• Airdrop-Events für frühe Unterstützer (Rewards via Staking + NFT-Halter)</li>
+                        <li>• Ausbau auf weitere Chains (BNB, Base, Solana via Wormhole/LayerZero)</li>
+                        <li>• Bewerbung bei CEX-Listings (Gate.io, KuCoin, Bitget)</li>
+                        <li>• Start der DAO-Struktur: Community-Votes über Treasury-Nutzung & Story-Richtung</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Phase 5 */}
+                <div className="relative">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-16 h-16 bg-destructive/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <span className="font-bold text-destructive">05</span>
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold mb-2">Phase 5 – Skalierung & Nachhaltigkeit</h4>
+                      <Badge className="mb-4 bg-destructive text-white">Q3–Q4 2026</Badge>
+                      <ul className="space-y-2 text-sm">
+                        <li>• Offizielle CEX-Listing (mind. 1 Mid-Tier, Ziel: Binance in Phase 6)</li>
+                        <li>• Vollausbau der Plattform → Game, Serie, Livestreams, NFTs in einem Ökosystem</li>
+                        <li>• Partnerschaften mit Metaverse- und Streaming-Plattformen</li>
+                        <li>• Entwicklung eines Meta-Agenten (KI) für Community-Analyse & Game-Balance</li>
+                        <li>• Vorbereitung auf institutionelle Kooperationen (Entertainment & Gaming)</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Langfristiges Ziel */}
+                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-6 rounded-lg border-l-4 border-primary">
+                  <h4 className="text-xl font-bold mb-3 flex items-center">
+                    <Zap className="w-6 h-6 mr-2 text-primary" />
+                    Langfristiges Ziel (2027)
+                  </h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>• MURAT als multichain Meme+Game Token mit Utility</li>
+                    <li>• Plattform als DeFi + Entertainment Hub</li>
+                    <li>• Großes CEX-Listing (Binance / Coinbase)</li>
+                    <li>• Community als „Mit-Produzent" der Serie + Spiel</li>
+                  </ul>
+                </div>
+
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
         {/* Call to Action */}
         <section>
           <Card className="comic-card">
