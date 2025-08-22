@@ -65,6 +65,9 @@ export const useMuratToken = () => {
     },
   });
 
+  // Mock MATIC balance for now
+  const formattedMaticBalance = "0.5"; // Mock value
+
   // Check MURAT allowance for QuickSwap
   const { data: muratAllowance, refetch: refetchMuratAllowance } = useReadContract({
     address: MURAT_TOKEN.address,
@@ -177,7 +180,11 @@ export const useMuratToken = () => {
     // Balance data
     muratBalance: formattedMuratBalance,
     usdtBalance: formattedUsdtBalance,
+    maticBalance: formattedMaticBalance,
     isLoadingBalance,
+    
+    // Token price
+    tokenPrice: tokenInfo?.price || 0.0001,
     
     // Allowance data
     muratAllowance,
