@@ -152,7 +152,7 @@ const Index = () => {
                 </div>
                 
                 {/* Secondary Navigation Row */}
-                <div className="grid md:grid-cols-3 gap-6 mt-8">
+                <div className="grid md:grid-cols-4 gap-6 mt-8">
                   <Link to="/analyse" className="group">
                     <Card className="comic-card">
                       <CardContent className="p-6 text-center space-y-4">
@@ -199,6 +199,23 @@ const Index = () => {
                         </p>
                         <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                           Mehr erfahren →
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                  
+                  <Link to="/token" className="group">
+                    <Card className="comic-card">
+                      <CardContent className="p-6 text-center space-y-4">
+                        <div className="w-16 h-16 mx-auto bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                          <span className="text-2xl">🪙</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">MURAT Token</h3>
+                        <p className="text-sm text-muted-foreground">
+                          Das native Token der Plattform – handeln, staken und verdienen.
+                        </p>
+                        <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                          Token Dashboard →
                         </Button>
                       </CardContent>
                     </Card>

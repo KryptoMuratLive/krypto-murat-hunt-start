@@ -1,6 +1,7 @@
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { useReadContract } from 'wagmi';
 import { Address, parseAbi } from 'viem';
+import { useMuratToken } from './useMuratToken';
 
 // NFT Contract Configuration for different access levels
 export const NFT_CONTRACTS = {
@@ -13,12 +14,13 @@ const NFT_ABI = parseAbi([
   'function balanceOf(address owner) view returns (uint256)',
 ]);
 
-export type AccessLevel = 'none' | 'standard' | 'premium' | 'jaeger';
+export type AccessLevel = 'none' | 'standard' | 'premium' | 'jaeger' | 'token';
 
 export const useWallet = () => {
   const { address, isConnected, isConnecting } = useAccount();
   const { connect, connectors, isPending } = useConnect();
   const { disconnect } = useDisconnect();
+  const { hasMinimumTokens } = useMuratToken();
 
   // Check NFT balance for Standard NFT
   const { data: standardBalance, isLoading: isCheckingStandard } = useReadContract({
@@ -55,11 +57,12 @@ export const useWallet = () => {
 
   const isCheckingNFT = isCheckingStandard || isCheckingPremium || isCheckingJaeger;
 
-  // Determine access level based on NFT ownership (highest level wins)
+  // Determine access level based on NFT ownership and token holding (highest level wins)
   const getAccessLevel = (): AccessLevel => {
     if (jaegerBalance && Number(jaegerBalance) > 0) return 'jaeger';
     if (premiumBalance && Number(premiumBalance) > 0) return 'premium';
     if (standardBalance && Number(standardBalance) > 0) return 'standard';
+    if (hasMinimumTokens && hasMinimumTokens(10)) return 'token';
     return 'none';
   };
 
@@ -88,6 +91,7 @@ export const useWallet = () => {
       case 'jaeger': return 'Jäger-Zugang';
       case 'premium': return 'Premium-Zugang';
       case 'standard': return 'Standard-Zugang';
+      case 'token': return 'Token-Zugang';
       default: return 'Kein Zugang';
     }
   };
@@ -97,6 +101,7 @@ export const useWallet = () => {
       case 'jaeger': return 'text-accent';
       case 'premium': return 'text-primary';
       case 'standard': return 'text-secondary';
+      case 'token': return 'text-primary';
       default: return 'text-muted-foreground';
     }
   };

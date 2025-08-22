@@ -17,6 +17,7 @@ import Universum from "./pages/Universum";
 import Analyse from "./pages/Analyse";
 import Chat from "./pages/Chat";
 import Whitepaper from "./pages/Whitepaper";
+import Token from "./pages/Token";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import NotFound from "./pages/NotFound";
@@ -34,12 +35,13 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/nft" element={<NFT />} />
-            <Route path="/universum" element={<Universum />} />
-            <Route path="/analyse" element={<Analyse />} />
-            <Route path="/chat" element={<Chat />} />
-            <Route path="/whitepaper" element={<Whitepaper />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/datenschutz" element={<Datenschutz />} />
+          <Route path="/universum" element={<Universum />} />
+          <Route path="/analyse" element={<Analyse />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/whitepaper" element={<Whitepaper />} />
+          <Route path="/token" element={<Token />} />
+          <Route path="/impressum" element={<Impressum />} />
+          <Route path="/datenschutz" element={<Datenschutz />} />
             <Route 
               path="/serie" 
               element={

@@ -1,19 +1,29 @@
 import { createConfig, http, WagmiProvider } from 'wagmi';
-import { mainnet, sepolia } from 'wagmi/chains';
+import { mainnet, sepolia, polygon } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { metaMask, walletConnect, coinbaseWallet } from '@wagmi/connectors';
+import { metaMask, walletConnect, coinbaseWallet, injected } from '@wagmi/connectors';
 import { ReactNode } from 'react';
 
 const projectId = 'kryptomurat-live';
 
 const config = createConfig({
-  chains: [mainnet, sepolia],
+  chains: [polygon, mainnet, sepolia],
   connectors: [
     metaMask(),
-    walletConnect({ projectId }),
+    walletConnect({ 
+      projectId,
+      metadata: {
+        name: 'KryptoMurat Live',
+        description: 'MURAT Token Trading Platform',
+        url: 'https://kryptomurat.live',
+        icons: ['https://kryptomurat.live/favicon.ico']
+      }
+    }),
     coinbaseWallet({ appName: 'KryptoMurat Live' }),
+    injected(),
   ],
   transports: {
+    [polygon.id]: http(),
     [mainnet.id]: http(),
     [sepolia.id]: http(),
   },
