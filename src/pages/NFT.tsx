@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,85 +6,17 @@ import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Wallet, Gamepad2, Shield, Zap, Brain } from "lucide-react";
-
-interface NFTCard {
-  id: number;
-  name: string;
-  team: "murat" | "jaeger";
-  skills: {
-    geschicklichkeit: number;
-    intelligenz: number;
-    staerke: number;
-  };
-  ability: string;
-  rarity: "haeufig" | "selten" | "sehr-selten";
-  image: string;
-}
-
-const nftCards: NFTCard[] = [
-  {
-    id: 1,
-    name: "KryptoMurat",
-    team: "murat",
-    skills: { geschicklichkeit: 95, intelligenz: 88, staerke: 75 },
-    ability: "Blockchain-Meister: Kann Bitcoin-Transaktionen verfolgen",
-    rarity: "sehr-selten",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 2,
-    name: "Der Hacker",
-    team: "murat",
-    skills: { geschicklichkeit: 90, intelligenz: 95, staerke: 60 },
-    ability: "Code-Breaker: Knackt jede Verschlüsselung",
-    rarity: "sehr-selten",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 3,
-    name: "Bitcoin-Jäger Alpha",
-    team: "jaeger",
-    skills: { geschicklichkeit: 85, intelligenz: 70, staerke: 92 },
-    ability: "Spurensucher: Findet versteckte Wallet-Adressen",
-    rarity: "selten",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 4,
-    name: "Crypto-Spion",
-    team: "jaeger",
-    skills: { geschicklichkeit: 80, intelligenz: 85, staerke: 70 },
-    ability: "Infiltration: Sammelt geheime Informationen",
-    rarity: "selten",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 5,
-    name: "Netzwerk-Wächter",
-    team: "murat",
-    skills: { geschicklichkeit: 75, intelligenz: 80, staerke: 85 },
-    ability: "Firewall: Schützt vor Angriffen",
-    rarity: "haeufig",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 6,
-    name: "Dark-Web-Hunter",
-    team: "jaeger",
-    skills: { geschicklichkeit: 88, intelligenz: 75, staerke: 80 },
-    ability: "Deep-Scan: Durchsucht das Dark Web",
-    rarity: "selten",
-    image: "/placeholder.svg"
-  }
-];
+import { allNFTCards, muratCards, jaegerCards } from "@/data/nftCards";
 
 const NFT = () => {
   const [selectedTeam, setSelectedTeam] = useState<"all" | "murat" | "jaeger">("all");
   const [walletDialogOpen, setWalletDialogOpen] = useState(false);
 
   const filteredCards = selectedTeam === "all" 
-    ? nftCards 
-    : nftCards.filter(card => card.team === selectedTeam);
+    ? allNFTCards 
+    : selectedTeam === "murat" 
+      ? muratCards 
+      : jaegerCards;
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
@@ -129,21 +62,21 @@ const NFT = () => {
             onClick={() => setSelectedTeam("all")}
             className="min-w-32"
           >
-            Alle Teams
+            Alle Teams ({allNFTCards.length} Karten)
           </Button>
           <Button
             variant={selectedTeam === "murat" ? "default" : "outline"}
             onClick={() => setSelectedTeam("murat")}
             className={`min-w-32 ${selectedTeam === "murat" ? "bg-blue-600 hover:bg-blue-700" : "border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"}`}
           >
-            Team Murat
+            Team Murat ({muratCards.length})
           </Button>
           <Button
             variant={selectedTeam === "jaeger" ? "default" : "outline"}
             onClick={() => setSelectedTeam("jaeger")}
             className={`min-w-32 ${selectedTeam === "jaeger" ? "bg-red-600 hover:bg-red-700" : "border-red-600 text-red-600 hover:bg-red-600 hover:text-white"}`}
           >
-            Team Jäger
+            Team Jäger ({jaegerCards.length})
           </Button>
         </div>
 

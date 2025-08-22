@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,165 +7,38 @@ import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sword, Shield, Brain, Zap, Users, Timer, Wallet } from "lucide-react";
-
-interface Card {
-  id: number;
-  name: string;
-  team: "murat" | "jäger";
-  geschicklichkeit: number;
-  intelligenz: number;
-  stärke: number;
-  fähigkeit: string;
-  seltenheit: "common" | "rare" | "epic" | "legendary";
-  image: string;
-}
-
-const muratCards: Card[] = [
-  {
-    id: 1,
-    name: "KryptoMurat",
-    team: "murat",
-    geschicklichkeit: 95,
-    intelligenz: 88,
-    stärke: 75,
-    fähigkeit: "Bitcoin-Radar: Findet versteckte Krypto-Hinweise",
-    seltenheit: "legendary",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 2,
-    name: "Blockchain-Hacker",
-    team: "murat",
-    geschicklichkeit: 80,
-    intelligenz: 92,
-    stärke: 60,
-    fähigkeit: "Code-Breaker: Hackt gegnerische Systeme",
-    seltenheit: "epic",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 3,
-    name: "Krypto-Analyst",
-    team: "murat",
-    geschicklichkeit: 70,
-    intelligenz: 85,
-    stärke: 55,
-    fähigkeit: "Market-Vision: Vorhersage von Krypto-Bewegungen",
-    seltenheit: "rare",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 4,
-    name: "Wallet-Wächter",
-    team: "murat",
-    geschicklichkeit: 75,
-    intelligenz: 70,
-    stärke: 80,
-    fähigkeit: "Sicherheits-Schild: Schutz vor Angriffen",
-    seltenheit: "rare",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 5,
-    name: "DeFi-Ninja",
-    team: "murat",
-    geschicklichkeit: 85,
-    intelligenz: 75,
-    stärke: 65,
-    fähigkeit: "Schnell-Tausch: Blitzschnelle Transaktionen",
-    seltenheit: "common",
-    image: "/placeholder.svg"
-  }
-];
-
-const jägerCards: Card[] = [
-  {
-    id: 6,
-    name: "Der Schatten-Jäger",
-    team: "jäger",
-    geschicklichkeit: 90,
-    intelligenz: 80,
-    stärke: 85,
-    fähigkeit: "Unsichtbarkeit: Kann unentdeckt angreifen",
-    seltenheit: "legendary",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 7,
-    name: "Cyber-Verfolger",
-    team: "jäger",
-    geschicklichkeit: 75,
-    intelligenz: 88,
-    stärke: 70,
-    fähigkeit: "Tracking: Verfolgt digitale Spuren",
-    seltenheit: "epic",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 8,
-    name: "Netzwerk-Saboteur",
-    team: "jäger",
-    geschicklichkeit: 80,
-    intelligenz: 82,
-    stärke: 65,
-    fähigkeit: "System-Crash: Legt Netzwerke lahm",
-    seltenheit: "rare",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 9,
-    name: "Daten-Dieb",
-    team: "jäger",
-    geschicklichkeit: 85,
-    intelligenz: 75,
-    stärke: 60,
-    fähigkeit: "Info-Steal: Stiehlt wichtige Informationen",
-    seltenheit: "rare",
-    image: "/placeholder.svg"
-  },
-  {
-    id: 10,
-    name: "Blockchain-Brecher",
-    team: "jäger",
-    geschicklichkeit: 70,
-    intelligenz: 90,
-    stärke: 55,
-    fähigkeit: "Chain-Break: Unterbricht Blockchain-Verbindungen",
-    seltenheit: "common",
-    image: "/placeholder.svg"
-  }
-];
+import { muratCards, jaegerCards } from "@/data/nftCards";
 
 const Game = () => {
-  const [selectedTeam, setSelectedTeam] = useState<"murat" | "jäger" | null>(null);
+  const [selectedTeam, setSelectedTeam] = useState<"murat" | "jaeger" | null>(null);
   const [showWalletDialog, setShowWalletDialog] = useState(false);
 
   useEffect(() => {
-    const savedTeam = localStorage.getItem("selectedTeam") as "murat" | "jäger" | null;
+    const savedTeam = localStorage.getItem("selectedTeam") as "murat" | "jaeger" | null;
     if (savedTeam) {
       setSelectedTeam(savedTeam);
     }
   }, []);
 
-  const handleTeamSelection = (team: "murat" | "jäger") => {
+  const handleTeamSelection = (team: "murat" | "jaeger") => {
     setSelectedTeam(team);
     localStorage.setItem("selectedTeam", team);
   };
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case "legendary": return "bg-gradient-to-r from-yellow-400 to-orange-500";
-      case "epic": return "bg-gradient-to-r from-purple-400 to-pink-500";
-      case "rare": return "bg-gradient-to-r from-blue-400 to-cyan-500";
+      case "sehr-selten": return "bg-gradient-to-r from-red-400 to-red-600";
+      case "selten": return "bg-gradient-to-r from-orange-400 to-orange-600";
+      case "haeufig": return "bg-gradient-to-r from-green-400 to-green-600";
       default: return "bg-gradient-to-r from-gray-400 to-gray-600";
     }
   };
 
   const getRarityText = (rarity: string) => {
     switch (rarity) {
-      case "legendary": return "Legendär";
-      case "epic": return "Episch";
-      case "rare": return "Selten";
+      case "sehr-selten": return "Sehr selten";
+      case "selten": return "Selten";
+      case "haeufig": return "Häufig";
       default: return "Gewöhnlich";
     }
   };
@@ -230,7 +104,7 @@ const Game = () => {
               <CardHeader>
                 <CardTitle className="flex items-center space-x-3 text-blue-400">
                   <Users className="w-6 h-6" />
-                  <span>Team Murat</span>
+                  <span>Team Murat ({muratCards.length} Karten)</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -251,14 +125,14 @@ const Game = () => {
 
             <Card 
               className={`comic-card cursor-pointer transition-all duration-300 hover:scale-105 ${
-                selectedTeam === "jäger" ? "ring-2 ring-red-500" : ""
+                selectedTeam === "jaeger" ? "ring-2 ring-red-500" : ""
               }`}
-              onClick={() => handleTeamSelection("jäger")}
+              onClick={() => handleTeamSelection("jaeger")}
             >
               <CardHeader>
                 <CardTitle className="flex items-center space-x-3 text-red-400">
                   <Sword className="w-6 h-6" />
-                  <span>Team Jäger</span>
+                  <span>Team Jäger ({jaegerCards.length} Karten)</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -266,13 +140,13 @@ const Game = () => {
                   Jage den Bitcoin mit roher Gewalt und List. Keine Regeln, nur Sieg.
                 </p>
                 <Button 
-                  className={`w-full ${selectedTeam === "jäger" ? "bg-red-600 hover:bg-red-700" : "bg-red-500 hover:bg-red-600"}`}
+                  className={`w-full ${selectedTeam === "jaeger" ? "bg-red-600 hover:bg-red-700" : "bg-red-500 hover:bg-red-600"}`}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleTeamSelection("jäger");
+                    handleTeamSelection("jaeger");
                   }}
                 >
-                  {selectedTeam === "jäger" ? "Ausgewählt" : "Team Jäger beitreten"}
+                  {selectedTeam === "jaeger" ? "Ausgewählt" : "Team Jäger beitreten"}
                 </Button>
               </CardContent>
             </Card>
@@ -296,31 +170,31 @@ const Game = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {muratCards.map((card) => (
                 <Card key={card.id} className="comic-card relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-full h-1 ${getRarityColor(card.seltenheit)}`} />
+                  <div className={`absolute top-0 right-0 w-full h-1 ${getRarityColor(card.rarity)}`} />
                   <CardHeader className="pb-2">
                     <div className="aspect-square bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-lg mb-2 flex items-center justify-center">
                       <Shield className="w-12 h-12 text-blue-400" />
                     </div>
                     <CardTitle className="text-sm text-blue-400">{card.name}</CardTitle>
-                    <Badge className={`text-xs ${getRarityColor(card.seltenheit)} text-white`}>
-                      {getRarityText(card.seltenheit)}
+                    <Badge className={`text-xs ${getRarityColor(card.rarity)} text-white`}>
+                      {getRarityText(card.rarity)}
                     </Badge>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="flex items-center space-x-2 text-xs">
                       <Zap className="w-3 h-3 text-yellow-400" />
-                      <span>Geschick: {card.geschicklichkeit}</span>
+                      <span>Geschick: {card.skills.geschicklichkeit}</span>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
                       <Brain className="w-3 h-3 text-purple-400" />
-                      <span>Intel: {card.intelligenz}</span>
+                      <span>Intel: {card.skills.intelligenz}</span>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
                       <Sword className="w-3 h-3 text-red-400" />
-                      <span>Stärke: {card.stärke}</span>
+                      <span>Stärke: {card.skills.staerke}</span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-2">
-                      {card.fähigkeit}
+                      {card.ability}
                     </p>
                   </CardContent>
                 </Card>
@@ -332,33 +206,33 @@ const Game = () => {
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-red-400 mb-4">Team Jäger Karten</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-              {jägerCards.map((card) => (
+              {jaegerCards.map((card) => (
                 <Card key={card.id} className="comic-card relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 w-full h-1 ${getRarityColor(card.seltenheit)}`} />
+                  <div className={`absolute top-0 right-0 w-full h-1 ${getRarityColor(card.rarity)}`} />
                   <CardHeader className="pb-2">
                     <div className="aspect-square bg-gradient-to-br from-red-500/20 to-orange-500/20 rounded-lg mb-2 flex items-center justify-center">
                       <Sword className="w-12 h-12 text-red-400" />
                     </div>
                     <CardTitle className="text-sm text-red-400">{card.name}</CardTitle>
-                    <Badge className={`text-xs ${getRarityColor(card.seltenheit)} text-white`}>
-                      {getRarityText(card.seltenheit)}
+                    <Badge className={`text-xs ${getRarityColor(card.rarity)} text-white`}>
+                      {getRarityText(card.rarity)}
                     </Badge>
                   </CardHeader>
                   <CardContent className="space-y-2">
                     <div className="flex items-center space-x-2 text-xs">
                       <Zap className="w-3 h-3 text-yellow-400" />
-                      <span>Geschick: {card.geschicklichkeit}</span>
+                      <span>Geschick: {card.skills.geschicklichkeit}</span>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
                       <Brain className="w-3 h-3 text-purple-400" />
-                      <span>Intel: {card.intelligenz}</span>
+                      <span>Intel: {card.skills.intelligenz}</span>
                     </div>
                     <div className="flex items-center space-x-2 text-xs">
                       <Sword className="w-3 h-3 text-red-400" />
-                      <span>Stärke: {card.stärke}</span>
+                      <span>Stärke: {card.skills.staerke}</span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-2">
-                      {card.fähigkeit}
+                      {card.ability}
                     </p>
                   </CardContent>
                 </Card>
