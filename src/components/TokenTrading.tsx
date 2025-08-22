@@ -114,7 +114,7 @@ export const TokenTrading = () => {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <ArrowUpDown className="w-5 h-5 text-primary" />
-          MURAT Trading
+          MURAT kaufen
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -139,18 +139,34 @@ export const TokenTrading = () => {
           </div>
         </div>
 
-        {/* Trading Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="buy" className="text-secondary">Kaufen</TabsTrigger>
-            <TabsTrigger value="sell" className="text-destructive">Verkaufen</TabsTrigger>
-          </TabsList>
+        {/* QuickSwap Integration */}
+        <div className="space-y-4">
+          <div className="p-4 bg-primary/10 rounded-lg border border-primary/30">
+            <h3 className="font-semibold text-lg mb-2 flex items-center gap-2">
+              <ArrowUpDown className="w-4 h-4" />
+              Direkt auf QuickSwap kaufen
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Tausche ETH, MATIC oder andere Token direkt gegen MURAT auf QuickSwap DEX.
+            </p>
+            <Button 
+              onClick={() => window.open('https://dapp.quickswap.exchange/swap/best/ETH/0x75B670775bCd4198eB0b030Fd22c7AafF8d8C266?chainId=137', '_blank')}
+              className="w-full text-lg py-6"
+              variant="default"
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Auf QuickSwap kaufen
+            </Button>
+          </div>
 
-          {/* Buy Tab */}
-          <TabsContent value="buy" className="space-y-4">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">oder</p>
+          </div>
+
+          <div className="space-y-4">
             <div className="space-y-2">
               <div className="flex justify-between items-center">
-                <Label htmlFor="buy-amount">USDT Betrag</Label>
+                <Label htmlFor="buy-amount">USDT Betrag (experimentell)</Label>
                 <button 
                   onClick={setMaxBuy}
                   className="text-xs text-primary hover:underline"
@@ -184,7 +200,7 @@ export const TokenTrading = () => {
               onClick={handleBuy}
               disabled={isPending || isConfirming || !buyAmount}
               className="w-full text-lg py-6"
-              variant="default"
+              variant="outline"
             >
               {isPending || isConfirming ? (
                 <>
@@ -192,62 +208,11 @@ export const TokenTrading = () => {
                   {isPending ? "Transaktion läuft..." : "Bestätigung..."}
                 </>
               ) : (
-                "MURAT kaufen"
+                "Experimenteller Kauf"
               )}
             </Button>
-          </TabsContent>
-
-          {/* Sell Tab */}
-          <TabsContent value="sell" className="space-y-4">
-            <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="sell-amount">MURAT Betrag</Label>
-                <button 
-                  onClick={setMaxSell}
-                  className="text-xs text-primary hover:underline"
-                >
-                  Max: {formatBalance(muratBalance, "MURAT")}
-                </button>
-              </div>
-              <Input
-                id="sell-amount"
-                type="number"
-                placeholder="0.00"
-                value={sellAmount}
-                onChange={(e) => setSellAmount(e.target.value)}
-                className="text-lg"
-              />
-            </div>
-
-            {sellAmount && (
-              <div className="p-3 bg-destructive/10 rounded-lg">
-                <p className="text-sm text-muted-foreground">Du erhältst ungefähr:</p>
-                <p className="text-lg font-bold text-destructive">
-                  ~{(parseFloat(sellAmount) / 10000).toFixed(6)} USDT
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Geschätzter Preis (abhängig von Liquidität)
-                </p>
-              </div>
-            )}
-
-            <Button 
-              onClick={handleSell}
-              disabled={isPending || isConfirming || !sellAmount}
-              className="w-full text-lg py-6"
-              variant="destructive"
-            >
-              {isPending || isConfirming ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  {isPending ? "Transaktion läuft..." : "Bestätigung..."}
-                </>
-              ) : (
-                "MURAT verkaufen"
-              )}
-            </Button>
-          </TabsContent>
-        </Tabs>
+          </div>
+        </div>
 
         {/* Transaction Status */}
         {(isPending || isConfirming || isConfirmed) && (
