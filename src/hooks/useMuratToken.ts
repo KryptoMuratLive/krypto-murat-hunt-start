@@ -102,11 +102,11 @@ export const useMuratToken = () => {
   const formattedMuratBalance = muratBalance ? formatUnits(muratBalance, MURAT_TOKEN.decimals) : '0';
   const formattedUsdtBalance = usdtBalance ? formatUnits(usdtBalance, 6) : '0'; // USDT has 6 decimals
 
-  // Token gating - check if user has minimum MURAT tokens
-  const hasMinimumTokens = (minAmount: number = 10) => {
+  // Token gating - check if user has any MURAT tokens (Beta access)
+  const hasMinimumTokens = (minAmount: number = 0.1) => {
     if (!muratBalance) return false;
     const balance = parseFloat(formattedMuratBalance);
-    return balance >= minAmount;
+    return balance >= minAmount; // Beta: Any MURAT holder gets access
   };
 
   // Approve MURAT tokens
