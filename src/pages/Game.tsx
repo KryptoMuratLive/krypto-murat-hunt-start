@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Link } from "react-router-dom";
 import { ArrowLeft, Sword, Shield, Brain, Zap, Users, Timer } from "lucide-react";
 import { muratCards, jaegerCards } from "@/data/nftCards";
+import { WalletConnect } from "@/components/WalletConnect";
 
 const Game = () => {
   const [selectedTeam, setSelectedTeam] = useState<"murat" | "jaeger" | null>(null);
@@ -248,7 +249,7 @@ const Game = () => {
           </CardHeader>
           <CardContent>
             <p className="text-muted-foreground mb-4">
-              🎮 Testversion - Spiel ohne NFT verfügbar
+              Nur mit NFT spielbar – Wallet verbinden erforderlich
             </p>
             <div className="space-y-4">
               <Button 
@@ -267,29 +268,17 @@ const Game = () => {
           </CardContent>
         </Card>
 
-        {/* Spiel Dialog */}
+        {/* Wallet Dialog */}
         <Dialog open={showWalletDialog} onOpenChange={setShowWalletDialog}>
           <DialogContent className="comic-card max-w-md">
             <DialogHeader>
-              <DialogTitle>Spiel starten - Testversion</DialogTitle>
+              <DialogTitle>Spiel starten</DialogTitle>
               <DialogDescription>
-                Beta-Version: Spiel ohne Wallet-Verbindung verfügbar.
+                Verbinde deine Wallet, um das Spiel zu starten.
               </DialogDescription>
             </DialogHeader>
-            <div className="py-4 space-y-4">
-              <div className="text-center p-4 bg-primary/10 rounded-lg">
-                <p className="text-sm text-muted-foreground mb-4">
-                  🎮 Testversion verfügbar - keine Wallet erforderlich
-                </p>
-                <Button className="neon-glow w-full" onClick={() => setShowWalletDialog(false)}>
-                  Spiel starten (Test)
-                </Button>
-              </div>
-              <div className="text-center">
-                <p className="text-xs text-muted-foreground">
-                  In der finalen Version wird eine Wallet-Verbindung benötigt
-                </p>
-              </div>
+            <div className="py-4">
+              <WalletConnect />
             </div>
           </DialogContent>
         </Dialog>
