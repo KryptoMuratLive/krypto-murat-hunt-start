@@ -50,14 +50,7 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path="/game" 
-              element={
-                <ProtectedRoute requiredAccessLevel="token">
-                  <Game />
-                </ProtectedRoute>
-              } 
-            />
+            <Route path="/game" element={<Game />} />
             <Route 
               path="/live" 
               element={
