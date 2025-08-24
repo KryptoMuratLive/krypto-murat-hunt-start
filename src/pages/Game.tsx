@@ -6,8 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Sword, Shield, Brain, Zap, Users, Timer, Wallet } from "lucide-react";
+import { ArrowLeft, Sword, Shield, Brain, Zap, Users, Timer } from "lucide-react";
 import { muratCards, jaegerCards } from "@/data/nftCards";
+import { WalletConnect } from "@/components/WalletConnect";
 
 const Game = () => {
   const [selectedTeam, setSelectedTeam] = useState<"murat" | "jaeger" | null>(null);
@@ -269,30 +270,15 @@ const Game = () => {
 
         {/* Wallet Dialog */}
         <Dialog open={showWalletDialog} onOpenChange={setShowWalletDialog}>
-          <DialogContent className="comic-card">
+          <DialogContent className="comic-card max-w-md">
             <DialogHeader>
-              <DialogTitle className="flex items-center space-x-3">
-                <Wallet className="w-6 h-6 text-primary" />
-                <span>Wallet verbinden</span>
-              </DialogTitle>
+              <DialogTitle>Spiel starten</DialogTitle>
               <DialogDescription>
-                Verbinde deine Wallet, um mit deinen NFT-Karten zu spielen.
+                Verbinde deine Wallet, um das Spiel zu starten.
               </DialogDescription>
             </DialogHeader>
-            <div className="space-y-4">
-              <p className="text-muted-foreground">
-                Du benötigst mindestens eine NFT-Karte aus der KryptoMurat Kollektion, um spielen zu können.
-              </p>
-              <div className="flex space-x-4">
-                <Button className="neon-glow flex-1">
-                  Wallet verbinden
-                </Button>
-                <Link to="/nft" className="flex-1">
-                  <Button variant="outline" className="w-full">
-                    NFTs kaufen
-                  </Button>
-                </Link>
-              </div>
+            <div className="py-4">
+              <WalletConnect />
             </div>
           </DialogContent>
         </Dialog>
