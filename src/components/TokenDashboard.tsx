@@ -130,10 +130,10 @@ export const TokenDashboard = () => {
             </Button>
             <Button 
               variant="outline"
-              onClick={() => window.open(`https://polygonscan.com/token/${MURAT_TOKEN.address}`, '_blank')}
+              onClick={() => window.open(`https://dexscreener.com/polygon/${MURAT_TOKEN.address}`, '_blank')}
             >
               <ExternalLink className="w-4 h-4 mr-2" />
-              Polygonscan
+              Chart
             </Button>
           </div>
         </CardContent>
