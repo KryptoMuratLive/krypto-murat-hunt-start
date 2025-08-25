@@ -3,17 +3,15 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Timer } from "lucide-react";
-import { WalletConnect } from "@/components/WalletConnect";
 import TeamSelection from "@/components/game/TeamSelection";
 import NFTCardCollection from "@/components/game/NFTCardCollection";
 import ActionCards from "@/components/game/ActionCards";
 
 const Game = () => {
   const [selectedTeam, setSelectedTeam] = useState<"murat" | "jaeger" | null>(null);
-  const [showWalletDialog, setShowWalletDialog] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
   useEffect(() => {
     const savedTeam = localStorage.getItem("selectedTeam") as "murat" | "jaeger" | null;
@@ -31,6 +29,13 @@ const Game = () => {
     // Placeholder for action card logic
     console.log(`Using action card: ${cardId}`);
     // Here you would implement the actual game logic
+  };
+
+  const handleStartGame = () => {
+    if (selectedTeam) {
+      setGameStarted(true);
+      console.log(`Game started for team: ${selectedTeam}`);
+    }
   };
 
   return (
@@ -96,46 +101,63 @@ const Game = () => {
         {/* NFT Kartenübersicht */}
         <NFTCardCollection />
 
-        {/* Spiel starten */}
-        <Card className="comic-card">
-          <CardHeader>
-            <CardTitle className="text-2xl">Bereit für das Spiel?</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-muted-foreground mb-4">
-              Nur mit NFT spielbar – Wallet verbinden erforderlich
-            </p>
-            <div className="space-y-4">
-              <Button 
-                className="neon-glow w-full text-lg py-6"
-                onClick={() => setShowWalletDialog(true)}
-                disabled={!selectedTeam}
-              >
-                {selectedTeam ? "Spiel starten" : "Wähle zuerst ein Team"}
-              </Button>
-              {selectedTeam && (
-                <p className="text-sm text-center text-accent">
-                  Du spielst für Team {selectedTeam === "murat" ? "Murat" : "Jäger"}
+        {/* Spiel starten/Status */}
+        {!gameStarted ? (
+          <Card className="comic-card">
+            <CardHeader>
+              <CardTitle className="text-2xl">Bereit für das Spiel?</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                🎮 Testmodus aktiviert - kein Wallet erforderlich
+              </p>
+              <div className="space-y-4">
+                <Button 
+                  className="neon-glow w-full text-lg py-6"
+                  onClick={handleStartGame}
+                  disabled={!selectedTeam}
+                >
+                  {selectedTeam ? "🚀 Spiel starten" : "Wähle zuerst ein Team"}
+                </Button>
+                {selectedTeam && (
+                  <p className="text-sm text-center text-accent">
+                    Du spielst für Team {selectedTeam === "murat" ? "Murat" : "Jäger"}
+                  </p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <Card className="comic-card border-green-500/50">
+            <CardHeader>
+              <CardTitle className="text-2xl text-green-400">🎮 Spiel aktiv!</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-foreground font-semibold">
+                    Team: {selectedTeam === "murat" ? "Murat 🛡️" : "Jäger ⚔️"}
+                  </span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setGameStarted(false)}
+                  >
+                    Spiel beenden
+                  </Button>
+                </div>
+                <Progress value={75} className="h-3" />
+                <p className="text-sm text-muted-foreground">
+                  ⚡ Nutze deine Aktionskarten strategisch!
                 </p>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Wallet Dialog */}
-        <Dialog open={showWalletDialog} onOpenChange={setShowWalletDialog}>
-          <DialogContent className="comic-card max-w-md">
-            <DialogHeader>
-              <DialogTitle>Spiel starten</DialogTitle>
-              <DialogDescription>
-                Verbinde deine Wallet, um das Spiel zu starten.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="py-4">
-              <WalletConnect />
-            </div>
-          </DialogContent>
-        </Dialog>
+                <div className="grid grid-cols-2 gap-2 mt-4">
+                  <Button variant="outline" size="sm">📊 Statistiken</Button>
+                  <Button variant="outline" size="sm">🎯 Ziele</Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
