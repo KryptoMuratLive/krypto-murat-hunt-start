@@ -200,6 +200,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
     if (!state.currentMatch) return;
     
     try {
+      // Handle demo mode differently
+      if (state.currentMatch.id === 'demo') {
+        dispatch({ type: 'RESET_GAME' });
+        toast({
+          title: "Demo beendet",
+          description: "Demo-Spiel wurde beendet"
+        });
+        return;
+      }
+
       await gameApi.forfeitMatch(state.currentMatch.id);
       dispatch({ type: 'RESET_GAME' });
       toast({
@@ -208,6 +218,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
       });
     } catch (error) {
       console.error('Error forfeiting match:', error);
+      toast({
+        title: "Fehler",
+        description: "Match konnte nicht aufgegeben werden",
+        variant: "destructive"
+      });
     }
   };
 
