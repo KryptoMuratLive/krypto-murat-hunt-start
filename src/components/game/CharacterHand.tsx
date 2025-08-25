@@ -19,6 +19,8 @@ const CharacterHand = ({
 }: CharacterHandProps) => {
   const { state, takeAction } = useGame();
   const { myDeck, isMyTurn } = state;
+  
+  console.log('CharacterHand rendering with deck:', myDeck);
 
   const handleUseAbility = (characterId: number) => {
     const character = CHARACTERS.find(c => c.id === characterId);

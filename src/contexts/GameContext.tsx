@@ -21,7 +21,7 @@ type GameAction =
   | { type: 'UPDATE_TURN_TIME'; payload: number }
   | { type: 'ADD_LOG_ENTRY'; payload: GameLogEntry }
   | { type: 'RESET_GAME' }
-  | { type: 'START_DEMO'; payload: { team: TeamType } };
+  | { type: 'START_DEMO'; payload: { team: TeamType; deck?: number[] } };
 
 const initialState: GameState = {
   currentMatch: undefined,
@@ -76,6 +76,9 @@ function gameReducer(state: GameState, action: GameAction): GameState {
         gameLog: [...state.gameLog, action.payload]
       };
     case 'START_DEMO':
+      const demoDeck = action.payload.deck || (action.payload.team === 'murat' ? [1001, 1002, 1004] : [2001, 2002, 2003]);
+      const demoCharacters = demoDeck.map(id => CHARACTERS.find(c => c.id === id)!).filter(Boolean);
+      console.log('START_DEMO with characters:', demoCharacters);
       return {
         ...state,
         currentMatch: {
@@ -97,12 +100,13 @@ function gameReducer(state: GameState, action: GameAction): GameState {
             match_id: 'demo',
             wallet_address: 'demo',
             team: action.payload.team,
-            deck: [],
+            deck: demoCharacters,
             ready: true,
             is_current_turn: true,
             created_at: new Date().toISOString()
           }
         ],
+        myDeck: demoCharacters,
         isMyTurn: true
       };
     case 'RESET_GAME':
@@ -209,11 +213,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const startDemo = (team: TeamType, deck?: number[]) => {
     const demoDeck = deck && deck.length === 3 ? deck : (team === 'murat' ? [1001, 1002, 1004] : [2001, 2002, 2003]);
-    dispatch({ type: 'START_DEMO', payload: { team } });
-    dispatch({ type: 'SET_DECK', payload: demoDeck });
+    console.log('Starting demo with deck:', demoDeck);
+    dispatch({ type: 'START_DEMO', payload: { team, deck: demoDeck } });
     toast({
       title: "Demo gestartet",
-      description: `Spielst als Team ${team === 'murat' ? 'Murat' : 'Jäger'}`
+      description: `Spielst als Team ${team === 'murat' ? 'Murat' : 'Jäger'} mit ${demoDeck.length} Charakteren`
     });
   };
 
