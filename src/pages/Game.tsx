@@ -18,6 +18,9 @@ const GameContent = () => {
   const [selectedCharacter, setSelectedCharacter] = useState<number | null>(null);
   const { currentMatch } = state;
 
+  console.log('GameContent rendering, state:', state);
+  console.log('Current match:', currentMatch);
+
   const handleZoneClick = (zone: Zone) => {
     if (state.isMyTurn && currentMatch) {
       takeAction('move', { toZone: zone });
@@ -72,7 +75,8 @@ const GameContent = () => {
 };
 
 const Game = () => {
-
+  console.log('Game component rendering');
+  
   return (
     <GameProvider>
       <div className="min-h-screen bg-background">

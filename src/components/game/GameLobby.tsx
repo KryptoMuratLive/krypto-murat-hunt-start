@@ -13,6 +13,7 @@ interface GameLobbyProps {
 }
 
 const GameLobby = ({ onStartDemo }: GameLobbyProps) => {
+  console.log('GameLobby rendering');
   const { createMatch, startDemo, loading, state } = useGame();
   const [selectedTeam, setSelectedTeam] = useState<TeamType | null>(null);
   const [searchingMatch, setSearchingMatch] = useState(false);
