@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { useGame } from '@/contexts/GameContext';
-import { TeamType, DEMO_DECKS } from '@/types/game';
+import { TeamType, DEMO_DECKS, CHARACTERS } from '@/types/game';
 import TeamSelection from './TeamSelection';
-import { Users, Timer, Play, Bot } from 'lucide-react';
+import { Users, Timer, Play, Bot, Shield, Zap } from 'lucide-react';
 
 interface GameLobbyProps {
   onStartDemo?: (team: TeamType) => void;
@@ -16,6 +16,7 @@ const GameLobby = ({ onStartDemo }: GameLobbyProps) => {
   console.log('GameLobby rendering');
   const { createMatch, startDemo, loading, state } = useGame();
   const [selectedTeam, setSelectedTeam] = useState<TeamType | null>(null);
+  const [selectedDeck, setSelectedDeck] = useState<number[]>([]);
   const [searchingMatch, setSearchingMatch] = useState(false);
   const [matchTimer, setMatchTimer] = useState(60);
 
@@ -56,8 +57,15 @@ const GameLobby = ({ onStartDemo }: GameLobbyProps) => {
 
   const handleStartDemo = () => {
     if (!selectedTeam) return;
-    startDemo(selectedTeam);
+    const deck = selectedDeck.length === 3 ? selectedDeck : DEMO_DECKS[selectedTeam];
+    startDemo(selectedTeam, deck);
     onStartDemo?.(selectedTeam);
+  };
+
+  const handleTeamSelect = (team: TeamType) => {
+    setSelectedTeam(team);
+    // Auto-load demo deck for this team
+    setSelectedDeck(DEMO_DECKS[team]);
   };
 
   if (searchingMatch) {
@@ -120,8 +128,27 @@ const GameLobby = ({ onStartDemo }: GameLobbyProps) => {
       {/* Team Selection */}
       <TeamSelection
         selectedTeam={selectedTeam}
-        onTeamSelection={setSelectedTeam}
+        onTeamSelection={handleTeamSelect}
       />
+
+      {/* Character Deck Selection */}
+      {selectedTeam && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2">
+              <span>Wähle dein Deck (3 Charaktere)</span>
+              <Badge variant="outline">{selectedDeck.length}/3</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CharacterDeckBuilder 
+              team={selectedTeam}
+              selectedDeck={selectedDeck}
+              onDeckChange={setSelectedDeck}
+            />
+          </CardContent>
+        </Card>
+      )}
 
       {/* Game Modes */}
       <div className="grid md:grid-cols-2 gap-4">
@@ -222,6 +249,114 @@ const GameLobby = ({ onStartDemo }: GameLobbyProps) => {
           </div>
         </CardContent>
       </Card>
+    </div>
+  );
+};
+
+// Character Deck Builder Component
+const CharacterDeckBuilder = ({ 
+  team, 
+  selectedDeck, 
+  onDeckChange 
+}: { 
+  team: TeamType; 
+  selectedDeck: number[]; 
+  onDeckChange: (deck: number[]) => void; 
+}) => {
+  const availableCharacters = CHARACTERS.filter(c => c.team === team);
+
+  const toggleCharacter = (characterId: number) => {
+    if (selectedDeck.includes(characterId)) {
+      onDeckChange(selectedDeck.filter(id => id !== characterId));
+    } else if (selectedDeck.length < 3) {
+      onDeckChange([...selectedDeck, characterId]);
+    }
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+        {availableCharacters.map(character => {
+          const isSelected = selectedDeck.includes(character.id);
+          const canSelect = selectedDeck.length < 3 || isSelected;
+          
+          return (
+            <Card 
+              key={character.id}
+              className={`cursor-pointer transition-all ${
+                isSelected ? 'ring-2 ring-primary bg-primary/5' : 
+                canSelect ? 'hover:ring-1 ring-muted hover:bg-muted/5' : 
+                'opacity-50 cursor-not-allowed'
+              }`}
+              onClick={() => canSelect && toggleCharacter(character.id)}
+            >
+              <CardContent className="p-3">
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h4 className="font-semibold text-sm">{character.name}</h4>
+                    <Badge 
+                      variant="outline" 
+                      className={`text-xs ${
+                        character.team === 'murat' ? 'text-blue-500' : 'text-red-500'
+                      }`}
+                    >
+                      {character.team === 'murat' ? 'Team Murat' : 'Team Jäger'}
+                    </Badge>
+                  </div>
+                  {isSelected && (
+                    <Badge className="bg-green-500 text-white text-xs">
+                      ✓ Gewählt
+                    </Badge>
+                  )}
+                </div>
+
+                {/* Stats */}
+                <div className="grid grid-cols-3 gap-2 mb-2 text-xs">
+                  <div className="text-center">
+                    <div className="text-muted-foreground">⚡ G</div>
+                    <div className="font-semibold">{character.geschwindigkeit}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-muted-foreground">🧠 I</div>
+                    <div className="font-semibold">{character.intelligenz}</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-muted-foreground">💪 S</div>
+                    <div className="font-semibold">{character.staerke}</div>
+                  </div>
+                </div>
+
+                {/* Ability */}
+                <div className="space-y-1">
+                  <div className="text-xs font-medium text-accent">
+                    <Zap className="w-3 h-3 inline mr-1" />
+                    {character.ability}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    {character.description}
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+      
+      {selectedDeck.length === 3 && (
+        <div className="text-center p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+          <div className="text-green-600 font-medium text-sm">
+            ✅ Deck vollständig! Bereit zum Spielen.
+          </div>
+        </div>
+      )}
+      
+      {selectedDeck.length === 0 && (
+        <div className="text-center p-3 bg-muted/50 rounded-lg">
+          <div className="text-muted-foreground text-sm">
+            Wähle 3 Charaktere für dein Deck
+          </div>
+        </div>
+      )}
     </div>
   );
 };

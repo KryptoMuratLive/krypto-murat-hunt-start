@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, ReactNode } from 'react';
-import { GameState, Match, MatchPlayer, GameLogEntry, TeamType } from '@/types/game';
+import { GameState, Match, MatchPlayer, GameLogEntry, TeamType, CHARACTERS } from '@/types/game';
 import { gameApi } from '@/services/gameApi';
 import { useToast } from '@/hooks/use-toast';
 
@@ -9,7 +9,7 @@ interface GameContextType {
   joinMatch: (matchId: string, team: TeamType, deck: number[]) => Promise<void>;
   takeAction: (actionType: string, payload: any) => Promise<void>;
   forfeitMatch: () => Promise<void>;
-  startDemo: (team: TeamType) => void;
+  startDemo: (team: TeamType, deck?: number[]) => void;
   loading: boolean;
 }
 
@@ -52,16 +52,18 @@ function gameReducer(state: GameState, action: GameAction): GameState {
     case 'SET_DECK':
       return {
         ...state,
-        myDeck: action.payload.map(id => ({ 
-          id, 
-          name: `Card ${id}`, 
-          team: id > 2000 ? 'jaeger' : 'murat',
-          geschwindigkeit: 5,
-          intelligenz: 5,
-          staerke: 5,
-          ability: 'Test',
-          description: 'Test card'
-        }))
+        myDeck: action.payload.map(id => 
+          CHARACTERS.find(c => c.id === id) || {
+            id, 
+            name: `Character ${id}`, 
+            team: id > 2000 ? 'jaeger' : 'murat',
+            geschwindigkeit: 5,
+            intelligenz: 5,
+            staerke: 5,
+            ability: 'Unknown',
+            description: 'Unknown character'
+          }
+        )
       };
     case 'UPDATE_TURN_TIME':
       return {
@@ -205,8 +207,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const startDemo = (team: TeamType) => {
+  const startDemo = (team: TeamType, deck?: number[]) => {
+    const demoDeck = deck && deck.length === 3 ? deck : (team === 'murat' ? [1001, 1002, 1004] : [2001, 2002, 2003]);
     dispatch({ type: 'START_DEMO', payload: { team } });
+    dispatch({ type: 'SET_DECK', payload: demoDeck });
     toast({
       title: "Demo gestartet",
       description: `Spielst als Team ${team === 'murat' ? 'Murat' : 'Jäger'}`
