@@ -71,6 +71,136 @@ export type Database = {
         }
         Relationships: []
       }
+      match_actions: {
+        Row: {
+          action_type: Database["public"]["Enums"]["action_type"]
+          created_at: string
+          id: string
+          match_id: string
+          payload: Json
+          processed: boolean
+          turn_number: number
+          wallet_address: string
+        }
+        Insert: {
+          action_type: Database["public"]["Enums"]["action_type"]
+          created_at?: string
+          id?: string
+          match_id: string
+          payload?: Json
+          processed?: boolean
+          turn_number: number
+          wallet_address: string
+        }
+        Update: {
+          action_type?: Database["public"]["Enums"]["action_type"]
+          created_at?: string
+          id?: string
+          match_id?: string
+          payload?: Json
+          processed?: boolean
+          turn_number?: number
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_actions_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      match_players: {
+        Row: {
+          created_at: string
+          deck: Json
+          id: string
+          is_current_turn: boolean
+          match_id: string
+          ready: boolean
+          team: Database["public"]["Enums"]["team_type"]
+          wallet_address: string
+        }
+        Insert: {
+          created_at?: string
+          deck?: Json
+          id?: string
+          is_current_turn?: boolean
+          match_id: string
+          ready?: boolean
+          team: Database["public"]["Enums"]["team_type"]
+          wallet_address: string
+        }
+        Update: {
+          created_at?: string
+          deck?: Json
+          id?: string
+          is_current_turn?: boolean
+          match_id?: string
+          ready?: boolean
+          team?: Database["public"]["Enums"]["team_type"]
+          wallet_address?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "match_players_match_id_fkey"
+            columns: ["match_id"]
+            isOneToOne: false
+            referencedRelation: "matches"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      matches: {
+        Row: {
+          board_state: Json
+          created_at: string
+          current_turn: number
+          game_log: Json
+          id: string
+          jaeger_position: string
+          murat_position: string
+          murat_visible: boolean
+          murat_visible_turns: number
+          status: Database["public"]["Enums"]["match_status"]
+          turn_timer_start: string | null
+          updated_at: string
+          winner_wallet: string | null
+        }
+        Insert: {
+          board_state?: Json
+          created_at?: string
+          current_turn?: number
+          game_log?: Json
+          id?: string
+          jaeger_position?: string
+          murat_position?: string
+          murat_visible?: boolean
+          murat_visible_turns?: number
+          status?: Database["public"]["Enums"]["match_status"]
+          turn_timer_start?: string | null
+          updated_at?: string
+          winner_wallet?: string | null
+        }
+        Update: {
+          board_state?: Json
+          created_at?: string
+          current_turn?: number
+          game_log?: Json
+          id?: string
+          jaeger_position?: string
+          murat_position?: string
+          murat_visible?: boolean
+          murat_visible_turns?: number
+          status?: Database["public"]["Enums"]["match_status"]
+          turn_timer_start?: string | null
+          updated_at?: string
+          winner_wallet?: string | null
+        }
+        Relationships: []
+      }
       memes: {
         Row: {
           created_at: string
@@ -174,13 +304,39 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      vote_counts: {
+        Row: {
+          meme_id: string | null
+          vote_count: number | null
+          vote_date: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "votes_meme_id_fkey"
+            columns: ["meme_id"]
+            isOneToOne: false
+            referencedRelation: "memes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      action_type:
+        | "move"
+        | "use_character_ability"
+        | "use_action_card"
+        | "verstecken"
+        | "polizei_rufen"
+        | "falle_stellen"
+        | "bitcoin_transaktion"
+        | "crowdsourcing"
+        | "live_spender"
+      match_status: "waiting" | "active" | "finished" | "cancelled"
+      team_type: "murat" | "jaeger"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -307,6 +463,20 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      action_type: [
+        "move",
+        "use_character_ability",
+        "use_action_card",
+        "verstecken",
+        "polizei_rufen",
+        "falle_stellen",
+        "bitcoin_transaktion",
+        "crowdsourcing",
+        "live_spender",
+      ],
+      match_status: ["waiting", "active", "finished", "cancelled"],
+      team_type: ["murat", "jaeger"],
+    },
   },
 } as const
