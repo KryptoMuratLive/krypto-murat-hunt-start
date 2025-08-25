@@ -169,6 +169,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     
     try {
       if (state.currentMatch.id === 'demo') {
+        console.log('🎮 DEMO ACTION:', actionType, payload);
+        console.log('🎮 Current state before action:', state.currentMatch);
+        
         // Demo mode - update match state and add to log
         const currentPlayer = state.players.find(p => p.wallet_address === 'demo');
         const currentTeam = currentPlayer?.team || 'murat';
@@ -177,6 +180,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         
         // Handle different action types
         if (actionType === 'move' && payload.toZone) {
+          console.log('🚶 MOVING:', currentTeam, 'to zone', payload.toZone);
           if (currentTeam === 'murat') {
             updatedMatch.murat_position = payload.toZone;
           } else {
@@ -186,6 +190,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         
         // Handle character abilities that affect visibility
         if (actionType === 'use_character_ability' && payload.characterId === 2001) {
+          console.log('👁️ VISIBILITY ABILITY USED');
           // Jäger: Komplette Überwachung - Murat 3 Runden sichtbar
           updatedMatch.murat_visible = true;
           updatedMatch.murat_visible_turns = 3;
@@ -206,6 +211,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
         
         // Add to updated match game log
         updatedMatch.game_log = [...(updatedMatch.game_log || []), logEntry];
+        
+        console.log('🎮 Updated match state:', updatedMatch);
         
         // Update the match state
         dispatch({ type: 'SET_MATCH', payload: updatedMatch });

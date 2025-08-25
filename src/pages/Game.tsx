@@ -22,6 +22,7 @@ const GameContent = () => {
   console.log('Current match:', currentMatch);
 
   const handleZoneClick = (zone: Zone) => {
+    console.log('🎯 Zone clicked:', zone, 'My turn:', state.isMyTurn);
     if (state.isMyTurn && currentMatch) {
       takeAction('move', { toZone: zone });
     }
