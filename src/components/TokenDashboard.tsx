@@ -115,12 +115,18 @@ export const TokenDashboard = () => {
         <CardContent>
           <div className="flex gap-4">
             <Button 
-              onClick={() => setShowTrading(!showTrading)}
+              onClick={() => window.open(`https://quickswap.exchange/#/swap?outputCurrency=${MURAT_TOKEN.address}`, '_blank')}
               className="flex-1"
-              variant={showTrading ? "secondary" : "default"}
             >
               <ArrowUpDown className="w-4 h-4 mr-2" />
-              {showTrading ? "Trading schließen" : "Handeln"}
+              Jetzt kaufen
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => window.open(`https://quickswap.exchange/#/swap?inputCurrency=${MURAT_TOKEN.address}`, '_blank')}
+            >
+              <ArrowUpDown className="w-4 h-4 mr-2" />
+              Verkaufen
             </Button>
             <Button 
               variant="outline"
@@ -226,9 +232,9 @@ export const TokenDashboard = () => {
             <Button 
               variant="link" 
               className="p-0 h-auto text-xs"
-              onClick={() => window.open('https://quickswap.exchange/#/pools', '_blank')}
+              onClick={() => window.open(`https://quickswap.exchange/#/analytics/token/${MURAT_TOKEN.address}`, '_blank')}
             >
-              QuickSwap Pool <ExternalLink className="w-3 h-3 ml-1" />
+              QuickSwap Analytics <ExternalLink className="w-3 h-3 ml-1" />
             </Button>
           </CardContent>
         </Card>
