@@ -115,7 +115,7 @@ export const TokenDashboard = () => {
         <CardContent>
           <div className="flex gap-4">
             <Button 
-              onClick={() => window.open(`https://quickswap.exchange/#/swap?outputCurrency=${MURAT_TOKEN.address}`, '_blank')}
+              onClick={() => window.open(`https://dapp.quickswap.exchange/swap/best/ETH/${MURAT_TOKEN.address}?chainId=137`, '_blank')}
               className="flex-1"
             >
               <ArrowUpDown className="w-4 h-4 mr-2" />
@@ -123,7 +123,7 @@ export const TokenDashboard = () => {
             </Button>
             <Button 
               variant="outline"
-              onClick={() => window.open(`https://quickswap.exchange/#/swap?inputCurrency=${MURAT_TOKEN.address}`, '_blank')}
+              onClick={() => window.open(`https://dapp.quickswap.exchange/swap/best/${MURAT_TOKEN.address}/ETH?chainId=137`, '_blank')}
             >
               <ArrowUpDown className="w-4 h-4 mr-2" />
               Verkaufen
