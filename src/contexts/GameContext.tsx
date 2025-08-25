@@ -169,15 +169,51 @@ export function GameProvider({ children }: { children: ReactNode }) {
     
     try {
       if (state.currentMatch.id === 'demo') {
-        // Demo mode - just add to log
+        // Demo mode - update match state and add to log
+        const currentPlayer = state.players.find(p => p.wallet_address === 'demo');
+        const currentTeam = currentPlayer?.team || 'murat';
+        
+        let updatedMatch = { ...state.currentMatch };
+        
+        // Handle different action types
+        if (actionType === 'move' && payload.toZone) {
+          if (currentTeam === 'murat') {
+            updatedMatch.murat_position = payload.toZone;
+          } else {
+            updatedMatch.jaeger_position = payload.toZone;
+          }
+        }
+        
+        // Handle character abilities that affect visibility
+        if (actionType === 'use_character_ability' && payload.characterId === 2001) {
+          // Jäger: Komplette Überwachung - Murat 3 Runden sichtbar
+          updatedMatch.murat_visible = true;
+          updatedMatch.murat_visible_turns = 3;
+        }
+        
+        // Update turn counter
+        updatedMatch.current_turn = state.currentMatch.current_turn + 1;
+        updatedMatch.updated_at = new Date().toISOString();
+        
+        // Create log entry
         const logEntry: GameLogEntry = {
           turn: state.currentMatch.current_turn,
-          player: 'Demo Player',
+          player: `Demo Player (${currentTeam})`,
           action: actionType,
           details: JSON.stringify(payload),
           timestamp: new Date().toISOString()
         };
-        dispatch({ type: 'ADD_LOG_ENTRY', payload: logEntry });
+        
+        // Add to updated match game log
+        updatedMatch.game_log = [...(updatedMatch.game_log || []), logEntry];
+        
+        // Update the match state
+        dispatch({ type: 'SET_MATCH', payload: updatedMatch });
+        
+        toast({
+          title: "Aktion ausgeführt",
+          description: `${actionType} wurde in der Demo gespielt`
+        });
         return;
       }
 
