@@ -6,6 +6,9 @@ import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Vote as VoteIcon, Clock, Users, Gift, BarChart3, Wallet, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { useWallet } from "@/hooks/useWallet";
+import { toast } from "sonner";
 
 interface VotingOption {
   id: string;
@@ -14,25 +17,121 @@ interface VotingOption {
   color: string;
 }
 
+interface Meme {
+  id: string;
+  top_text: string;
+  image_data: string;
+  created_at: string;
+}
+
 const Vote = () => {
+  const { isConnected, address, accessLevel } = useWallet();
   const [hasVoted, setHasVoted] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [hasNFT, setHasNFT] = useState(false); // This would be checked via wallet connection
   const [walletDialogOpen, setWalletDialogOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [votingOptions, setVotingOptions] = useState<VotingOption[]>([]);
+  const [userVote, setUserVote] = useState<string | null>(null);
   const [timeRemaining, setTimeRemaining] = useState({
     hours: 23,
     minutes: 42,
     seconds: 15
   });
 
-  // Mock voting data - in real app this would come from blockchain/API
-  const [votingOptions, setVotingOptions] = useState<VotingOption[]>([
-    { id: "bypass", text: "Die Drohne umgehen", votes: 1247, color: "bg-blue-600" },
-    { id: "destroy", text: "Die Drohne zerstören", votes: 983, color: "bg-red-600" },
-    { id: "hack", text: "Die Drohne hacken", votes: 456, color: "bg-green-600" }
-  ]);
-
   const totalVotes = votingOptions.reduce((sum, option) => sum + option.votes, 0);
+
+  // Load voting options and check if user has voted
+  useEffect(() => {
+    loadVotingData();
+    checkUserVote();
+  }, [address]);
+
+  const loadVotingData = async () => {
+    try {
+      // Load memes (voting options)
+      const { data: memes, error: memesError } = await supabase
+        .from('memes')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (memesError) {
+        console.error('Error loading memes:', memesError);
+        return;
+      }
+
+      if (!memes || memes.length === 0) {
+        // Create default voting options if no memes exist
+        setVotingOptions([
+          { id: "bypass", text: "Die Drohne umgehen", votes: 0, color: "bg-blue-600" },
+          { id: "destroy", text: "Die Drohne zerstören", votes: 0, color: "bg-red-600" },
+          { id: "hack", text: "Die Drohne hacken", votes: 0, color: "bg-green-600" }
+        ]);
+        setLoading(false);
+        return;
+      }
+
+      // Load vote counts for each meme
+      const votingData: VotingOption[] = [];
+      const colors = ["bg-blue-600", "bg-red-600", "bg-green-600", "bg-purple-600", "bg-orange-600"];
+
+      for (let i = 0; i < memes.length; i++) {
+        const meme = memes[i];
+        
+        // Count votes for this meme
+        const { count, error: voteError } = await supabase
+          .from('votes')
+          .select('*', { count: 'exact', head: true })
+          .eq('meme_id', meme.id);
+
+        if (voteError) {
+          console.error('Error counting votes:', voteError);
+          continue;
+        }
+
+        votingData.push({
+          id: meme.id,
+          text: meme.top_text,
+          votes: count || 0,
+          color: colors[i % colors.length]
+        });
+      }
+
+      setVotingOptions(votingData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error loading voting data:', error);
+      setLoading(false);
+    }
+  };
+
+  const checkUserVote = async () => {
+    if (!address) return;
+
+    try {
+      // Check if user has already voted using wallet address as voter_ip
+      const { data: existingVote, error } = await supabase
+        .from('votes')
+        .select('meme_id')
+        .eq('voter_ip', address)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error && error.code !== 'PGRST116') { // PGRST116 is "no rows returned"
+        console.error('Error checking user vote:', error);
+        return;
+      }
+
+      if (existingVote) {
+        setHasVoted(true);
+        setUserVote(existingVote.meme_id);
+        setSelectedOption(existingVote.meme_id);
+      }
+    } catch (error) {
+      console.error('Error checking user vote:', error);
+    }
+  };
 
   // Countdown timer
   useEffect(() => {
@@ -52,25 +151,53 @@ const Vote = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const handleVote = (optionId: string) => {
-    if (!hasNFT) {
+  const handleVote = async (optionId: string) => {
+    if (!isConnected || !address) {
       setWalletDialogOpen(true);
+      return;
+    }
+
+    // Check if user has access (NFT or token holder)
+    if (accessLevel === 'none') {
+      toast.error("Du benötigst ein NFT oder Token, um abstimmen zu können.");
       return;
     }
 
     if (hasVoted) return;
 
-    // Update vote count
-    setVotingOptions(prev => 
-      prev.map(option => 
-        option.id === optionId 
-          ? { ...option, votes: option.votes + 1 }
-          : option
-      )
-    );
+    try {
+      // Submit vote to database
+      const { error: voteError } = await supabase
+        .from('votes')
+        .insert({
+          meme_id: optionId,
+          voter_ip: address // Using wallet address as unique identifier
+        });
 
-    setSelectedOption(optionId);
-    setHasVoted(true);
+      if (voteError) {
+        console.error('Error submitting vote:', voteError);
+        toast.error("Fehler beim Abstimmen. Bitte versuche es erneut.");
+        return;
+      }
+
+      // Update local state
+      setVotingOptions(prev => 
+        prev.map(option => 
+          option.id === optionId 
+            ? { ...option, votes: option.votes + 1 }
+            : option
+        )
+      );
+
+      setSelectedOption(optionId);
+      setHasVoted(true);
+      setUserVote(optionId);
+      
+      toast.success("Deine Stimme wurde erfolgreich abgegeben!");
+    } catch (error) {
+      console.error('Error voting:', error);
+      toast.error("Fehler beim Abstimmen. Bitte versuche es erneut.");
+    }
   };
 
   const getVotePercentage = (votes: number) => {
@@ -133,9 +260,16 @@ const Vote = () => {
               </p>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Voting Options */}
-              <div className="space-y-4">
-                {votingOptions.map((option) => (
+              {loading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                  <p className="text-muted-foreground mt-2">Lade Voting-Optionen...</p>
+                </div>
+              ) : (
+                <>
+                  {/* Voting Options */}
+                  <div className="space-y-4">
+                    {votingOptions.map((option) => (
                   <div key={option.id} className="space-y-2">
                     <Button
                       variant={selectedOption === option.id ? "default" : "outline"}
@@ -164,10 +298,12 @@ const Vote = () => {
                     <Progress 
                       value={getVotePercentage(option.votes)} 
                       className="h-2"
-                    />
-                  </div>
-                ))}
-              </div>
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
 
               {/* Voting Status Messages */}
               {hasVoted ? (
@@ -181,14 +317,17 @@ const Vote = () => {
                     Die Ergebnisse aktualisieren sich live.
                   </p>
                 </div>
-              ) : !hasNFT ? (
+              ) : (!isConnected || accessLevel === 'none') ? (
                 <div className="text-center p-6 bg-muted rounded-lg">
                   <Wallet className="w-12 h-12 mx-auto mb-3 text-muted-foreground" />
                   <h3 className="text-lg font-semibold mb-2">
                     Verbinde deine Wallet, um mitzuentscheiden
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    Nur NFT-Holder können an der Abstimmung teilnehmen.
+                    {!isConnected 
+                      ? "Verbinde deine Wallet, um an der Abstimmung teilzunehmen."
+                      : "Du benötigst ein NFT oder Token, um abstimmen zu können."
+                    }
                   </p>
                   <Dialog open={walletDialogOpen} onOpenChange={setWalletDialogOpen}>
                     <DialogTrigger asChild>
@@ -208,28 +347,32 @@ const Vote = () => {
                         <p className="text-muted-foreground">
                           Verbinde deine Wallet, um an der Community-Abstimmung teilzunehmen.
                         </p>
-                        <div className="grid gap-3">
-                          <Button 
-                            className="justify-start" 
-                            onClick={() => {
-                              setHasNFT(true);
-                              setWalletDialogOpen(false);
-                            }}
-                          >
-                            <Wallet className="w-4 h-4 mr-2" />
-                            WalletConnect
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            className="justify-start"
-                            onClick={() => {
-                              setHasNFT(true);
-                              setWalletDialogOpen(false);
-                            }}
-                          >
-                            <Wallet className="w-4 h-4 mr-2" />
-                            MetaMask
-                          </Button>
+                        <div className="space-y-4">
+                          {!isConnected ? (
+                            <div className="text-center">
+                              <p className="text-muted-foreground mb-4">
+                                Bitte verbinde deine Wallet über das Wallet-Widget oben rechts.
+                              </p>
+                              <Button 
+                                variant="outline"
+                                onClick={() => setWalletDialogOpen(false)}
+                              >
+                                Verstanden
+                              </Button>
+                            </div>
+                          ) : (
+                            <div className="text-center">
+                              <p className="text-muted-foreground mb-4">
+                                Du benötigst mindestens ein NFT oder Token, um abstimmen zu können.
+                              </p>
+                              <Button 
+                                variant="outline"
+                                onClick={() => setWalletDialogOpen(false)}
+                              >
+                                Verstanden
+                              </Button>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </DialogContent>
