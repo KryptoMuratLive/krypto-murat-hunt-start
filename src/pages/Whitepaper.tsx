@@ -53,23 +53,28 @@ const tokenomicsData = [
 const tokenUseCases = [
   {
     icon: <Shield className="w-6 h-6" />,
-    title: "Zugang zur Serie & exklusiven Cams",
-    description: "Mit MURAT-Token erhältst du Zugang zu Premium-Content und Live-Streams"
+    title: "Zugang zu Serie & exklusiven Livestream-Cams",
+    description: "Mit MURAT-Token erhältst du Premium-Access zu besonderen Live-Stream Perspektiven"
   },
   {
     icon: <Users className="w-6 h-6" />,
-    title: "Extra-Stimmen beim Voting",
-    description: "Mehr Token = mehr Einfluss bei Community-Entscheidungen"
+    title: "Extra-Stimmen bei Community-Votings",
+    description: "Mehr Token = mehr Einfluss bei Story-Entscheidungen und Game-Development"
   },
   {
     icon: <Coins className="w-6 h-6" />,
-    title: "Airdrops & Belohnungen",
-    description: "Aktive Community-Mitglieder werden regelmäßig belohnt"
+    title: "Belohnungen & Airdrops für aktive Nutzer",
+    description: "Langfristige Community-Mitglieder erhalten regelmäßige Token-Rewards"
   },
   {
     icon: <Zap className="w-6 h-6" />,
-    title: "Ingame-Shop & Trading",
-    description: "Später: Upgrades kaufen, Items handeln und Charaktere verbessern"
+    title: "Ingame-Shop (Upgrades, Items, Karten)",
+    description: "Nutze Token für Charakterverbesserungen, neue Spielkarten und Upgrades"
+  },
+  {
+    icon: <Target className="w-6 h-6" />,
+    title: "Governance-Stimme bei Treasury & Story-Entwicklung",
+    description: "Bestimme mit über die Verwendung der Treasury und die Richtung der Geschichte"
   }
 ];
 
@@ -97,10 +102,10 @@ export default function Whitepaper() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/0 to-background/80" />
         <div className="container mx-auto text-center relative z-10">
           <h1 className="comic-title mb-6">
-            Das Herz des Projekts
+            KryptoMurat Live – Whitepaper
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8">
-            Das Herz des Projekts – transparent und verständlich erklärt.
+            Vision, Tokenomics und Roadmap – transparent erklärt.
           </p>
         </div>
       </section>
@@ -121,15 +126,36 @@ export default function Whitepaper() {
             <CardContent>
               <div className="text-lg leading-relaxed space-y-4">
                 <p>
-                  <strong>KryptoMurat Live</strong> ist mehr als ein Spiel oder eine Serie. 
-                  Es ist eine neue Art, Geschichten zu erleben – gemeinsam mit der Community.
+                  <strong>KryptoMurat Live – Jagd auf den Bitcoin</strong> ist mehr als ein Spiel oder eine Serie. 
+                  Es ist ein neuer Weg, Geschichten zu erleben – gemeinsam mit der Community.
                 </p>
                 <p>
-                  Du bestimmst, was passiert. Mit deiner NFT-Karte, deiner Stimme und deiner Entscheidung.
+                  Wir wollen ein dezentral organisiertes Entertainment- und Bildungs-Ökosystem aufbauen, das klassische Medienstrukturen durchbricht. In unserer Welt bist du nicht nur Zuschauer – du bist Mitspieler, Entscheider und Mitgestalter.
+                </p>
+                <p>
+                  <strong>Mit deiner NFT-Karte</strong> beeinflusst du den Verlauf der Geschichte.<br/>
+                  <strong>Mit deiner Stimme</strong> bestimmst du, wie sich Serie und Spiel entwickeln.<br/>
+                  <strong>Mit deinem MURAT-Token</strong> erhältst du echten Einfluss, Zugang und Belohnungen.
                 </p>
                 <p className="text-primary font-semibold">
-                  Web3 ist nicht das Ziel – es ist das Werkzeug.
+                  Web3 ist für uns nicht das Ziel, sondern das Werkzeug.
                 </p>
+                <p>
+                  Wir glauben, dass die Zukunft darin liegt, Community, Technologie und Kreativität zu verbinden. Jeder Nutzer soll Teil des Projekts sein – nicht durch Spekulation, sondern durch aktive Teilhabe. NFTs und Token sind bei uns keine reinen Finanzobjekte, sondern Werkzeuge für Einfluss, Zugang und Gemeinschaft.
+                </p>
+                <p>
+                  Langfristig wollen wir mit dem MURAT-Token eine eigene Blockchain etablieren, die speziell auf Entertainment- und Creator-Projekte zugeschnitten ist – als Plattform für Serien, Games und digitale Rechteverwaltung.
+                </p>
+                <div className="bg-muted/50 p-6 rounded-lg mt-6 space-y-3">
+                  <h4 className="font-bold text-center mb-4">Unsere Vision:</h4>
+                  <ul className="space-y-2">
+                    <li><strong>Transparenz:</strong> Alle Daten und Entscheidungen sind on-chain nachvollziehbar.</li>
+                    <li><strong>Sicherheit:</strong> Smart Contracts sind öffentlich und geprüft.</li>
+                    <li><strong>Community-First:</strong> Die Hälfte aller Token geht direkt an die Community.</li>
+                    <li><strong>Weltweite Zugänglichkeit:</strong> Mehrsprachige Plattform, Wallet-Login für Profis und Einsteiger.</li>
+                    <li><strong>Kreativität & Freiheit:</strong> Zuschauer, Spieler und Investoren erschaffen gemeinsam ein Erlebnis, das niemand alleine kontrolliert.</li>
+                  </ul>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -203,10 +229,10 @@ export default function Whitepaper() {
                 <h4 className="font-bold mb-3 text-center">Warum diese Aufteilung?</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <strong>Community First:</strong> 50% gehen direkt an die Community (30% Airdrops + 20% Staking)
+                    👉 <strong>Community First:</strong> 50% direkt an die Nutzer (Airdrops + Staking).
                   </div>
                   <div>
-                    <strong>Transparenz:</strong> Team erhält nur 15% und das über Zeit verteilt
+                    👉 <strong>Kein „Cashgrab":</strong> Team-Anteil ist klein, verteilt sich über Zeit.
                   </div>
                 </div>
               </div>
@@ -344,15 +370,15 @@ export default function Whitepaper() {
                       <span className="font-bold text-primary">01</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-xl font-bold mb-2">Phase 1 – Konzept & Fundament</h4>
-                      <Badge className="mb-4 bg-primary text-white">Q3 2025</Badge>
+                      <h4 className="text-xl font-bold mb-2">Phase 1 – Fundament & Start</h4>
+                      <Badge className="mb-4 bg-primary text-white">Q4 2025</Badge>
                       <ul className="space-y-2 text-sm">
-                        <li>• Veröffentlichung des Whitepapers (mehrsprachig: DE/EN/TR)</li>
-                        <li>• Finalisierung des MURAT-Token Smart Contracts (1 Mrd. Supply, 1% Treasury, 1% Burn)</li>
-                        <li>• Deployment auf Polygon (erste Chain, Multichain später möglich)</li>
-                        <li>• Aufbau der Plattform (Lovable + Vercel)</li>
-                        <li>• NFT-Kartenspiel „Jagd auf den Bitcoin" → erste Beta-Version</li>
-                        <li>• Start Community-Building (Telegram, X, TikTok, Discord)</li>
+                        <li>• Whitepaper-Launch (mehrsprachig: DE/EN/TR)</li>
+                        <li>• Finalisierung des Smart Contracts (1 Mrd. Supply, Anti-Dump, Burn)</li>
+                        <li>• Deployment auf Polygon (erste Chain, Multichain später)</li>
+                        <li>• Plattform-Aufbau (Lovable + Vercel)</li>
+                        <li>• Erste Beta des NFT-Kartenspiels Jagd auf den Bitcoin</li>
+                        <li>• Community-Building (Telegram, X, TikTok, Discord)</li>
                       </ul>
                     </div>
                   </div>
@@ -366,15 +392,15 @@ export default function Whitepaper() {
                     </div>
                     <div className="flex-1">
                       <h4 className="text-xl font-bold mb-2">Phase 2 – Community & Utility</h4>
-                      <Badge className="mb-4 bg-secondary text-white">Q4 2025</Badge>
+                      <Badge className="mb-4 bg-secondary text-white">Q1 2026</Badge>
                       <ul className="space-y-2 text-sm">
-                        <li>• Launch des AccessPass (ERC1155) für Serien- & Spielzugang</li>
+                        <li>• Launch AccessPass (ERC1155) für Serien- & Spielzugang</li>
                         <li>• Staking-Programm im MuratLockVault (30/90/180/360 Tage mit Multiplikatoren)</li>
                         <li>• Integration von Livepeer-Streaming auf kryptomur.at</li>
-                        <li>• NFT-Pass für exklusive Inhalte (z. B. Livestream-Kameras, Bonuskarten im Game)</li>
-                        <li>• Erste Partnerschaften (Influencer & kleinere Krypto-Communities)</li>
-                        <li>• Listing auf DEX (Uniswap/QuickSwap) mit Liquidity Pool</li>
-                        <li>• Start Community-Voting: Einfluss auf Storyline & Spielentwicklung</li>
+                        <li>• NFT-Pässe für exklusive Inhalte (z. B. Kamera-Perspektiven, Bonuskarten im Game)</li>
+                        <li>• Erste Partnerschaften mit Krypto-Communities & Influencern</li>
+                        <li>• Listing auf DEX (QuickSwap/Uniswap) inkl. Liquidity Pool</li>
+                        <li>• Start Community-Voting → Einfluss auf Storyline & Game</li>
                       </ul>
                     </div>
                   </div>
@@ -388,14 +414,14 @@ export default function Whitepaper() {
                     </div>
                     <div className="flex-1">
                       <h4 className="text-xl font-bold mb-2">Phase 3 – Expansion & Reichweite</h4>
-                      <Badge className="mb-4 bg-accent text-white">Q1 2026</Badge>
+                      <Badge className="mb-4 bg-accent text-white">Q2 2026</Badge>
                       <ul className="space-y-2 text-sm">
-                        <li>• NFT-Galerie + Minting-Seite (alle Karten & Sammlerstücke)</li>
+                        <li>• NFT-Galerie & Minting-Seite (Charakterkarten & Sammlerstücke)</li>
                         <li>• Launch der Mini-Serie inkl. interaktiver Zuschauerentscheidungen</li>
-                        <li>• Multi-Language Livestreams mit KI-Übersetzung (Deutsch → EN, TR, ES, ZH)</li>
-                        <li>• Marketing-Kampagne („Jagd auf den Bitcoin" als virales Meme + Game)</li>
-                        <li>• Erste Kooperationen mit GameFi- oder Meme-Projekten</li>
-                        <li>• DEX-Liquidität erhöhen (Community Pools, Incentives)</li>
+                        <li>• Multi-Language Livestreams mit KI-Übersetzung (DE → EN/TR/ES/ZH)</li>
+                        <li>• Marketing-Kampagne („Jagd auf den Bitcoin" als virales Meme & Game)</li>
+                        <li>• Erste Kooperationen mit GameFi-/Meme-Projekten</li>
+                        <li>• Ausbau der DEX-Liquidität (Community Pools & Incentives)</li>
                       </ul>
                     </div>
                   </div>
@@ -408,14 +434,14 @@ export default function Whitepaper() {
                       <span className="font-bold text-muted-foreground">04</span>
                     </div>
                     <div className="flex-1">
-                      <h4 className="text-xl font-bold mb-2">Phase 4 – Adoption & Listing</h4>
-                      <Badge className="mb-4 bg-muted-foreground text-white">Q2 2026</Badge>
+                      <h4 className="text-xl font-bold mb-2">Phase 4 – Adoption & DAO</h4>
+                      <Badge className="mb-4 bg-muted-foreground text-white">Q3 2026</Badge>
                       <ul className="space-y-2 text-sm">
                         <li>• Launch des Community-Hubs (Chat, Voting, Rewards, Leaderboard)</li>
-                        <li>• Airdrop-Events für frühe Unterstützer (Rewards via Staking + NFT-Halter)</li>
-                        <li>• Ausbau auf weitere Chains (BNB, Base, Solana via Wormhole/LayerZero)</li>
+                        <li>• Airdrop-Events für frühe Unterstützer (Belohnungen via Staking + NFT-Halter)</li>
+                        <li>• Multichain-Expansion (Base, BNB, Solana via LayerZero/Wormhole)</li>
                         <li>• Bewerbung bei CEX-Listings (Gate.io, KuCoin, Bitget)</li>
-                        <li>• Start der DAO-Struktur: Community-Votes über Treasury-Nutzung & Story-Richtung</li>
+                        <li>• Start der DAO-Struktur → Community stimmt über Treasury und Story-Richtung ab</li>
                       </ul>
                     </div>
                   </div>
@@ -429,13 +455,14 @@ export default function Whitepaper() {
                     </div>
                     <div className="flex-1">
                       <h4 className="text-xl font-bold mb-2">Phase 5 – Skalierung & Nachhaltigkeit</h4>
-                      <Badge className="mb-4 bg-destructive text-white">Q3–Q4 2026</Badge>
+                      <Badge className="mb-4 bg-destructive text-white">Q4 2026 – 2027</Badge>
                       <ul className="space-y-2 text-sm">
-                        <li>• Offizielle CEX-Listing (mind. 1 Mid-Tier, Ziel: Binance in Phase 6)</li>
+                        <li>• Offizielle CEX-Listings (mind. 1 Mid-Tier, Ziel Binance in Phase 6)</li>
                         <li>• Vollausbau der Plattform → Game, Serie, Livestreams, NFTs in einem Ökosystem</li>
-                        <li>• Partnerschaften mit Metaverse- und Streaming-Plattformen</li>
-                        <li>• Entwicklung eines Meta-Agenten (KI) für Community-Analyse & Game-Balance</li>
-                        <li>• Vorbereitung auf institutionelle Kooperationen (Entertainment & Gaming)</li>
+                        <li>• Partnerschaften mit Metaverse- & Streaming-Plattformen</li>
+                        <li>• Entwicklung eines Meta-Agenten (KI) zur Community-Analyse & Game-Balance</li>
+                        <li>• Kooperationen mit Entertainment- & Gaming-Unternehmen</li>
+                        <li>• Großes CEX-Listing (Binance / Coinbase) als Endziel</li>
                       </ul>
                     </div>
                   </div>
