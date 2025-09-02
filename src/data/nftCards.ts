@@ -23,7 +23,7 @@ export const muratCards: NFTCard[] = [
     skills: { geschicklichkeit: 95, intelligenz: 88, staerke: 75 },
     ability: "Bitcoin-Radar: Findet versteckte Krypto-Hinweise",
     rarity: "sehr-selten",
-    image: "/lovable-uploads/c6facd2d-9500-464b-bcfc-610eefb2daf2.png"
+    image: "/lovable-uploads/28c2d5ea-2a2e-4931-8f5c-944e67d4c27d.png"
   },
   {
     id: 2,
@@ -41,7 +41,7 @@ export const muratCards: NFTCard[] = [
     skills: { geschicklichkeit: 70, intelligenz: 85, staerke: 55 },
     ability: "Market-Vision: Vorhersage von Krypto-Bewegungen",
     rarity: "selten",
-    image: "/lovable-uploads/28c2d5ea-2a2e-4931-8f5c-944e67d4c27d.png"
+    image: "/lovable-uploads/c6facd2d-9500-464b-bcfc-610eefb2daf2.png"
   },
   {
     id: 4,
@@ -72,7 +72,7 @@ export const jaegerCards: NFTCard[] = [
     skills: { geschicklichkeit: 90, intelligenz: 80, staerke: 85 },
     ability: "Unsichtbarkeit: Kann unentdeckt angreifen",
     rarity: "sehr-selten",
-    image: "/lovable-uploads/727a6b18-de51-4104-9f42-f3e4c8b4b555.png"
+    image: "/lovable-uploads/969ce4eb-64aa-4b96-8591-b64de4f5d785.png"
   },
   {
     id: 7,
@@ -90,7 +90,7 @@ export const jaegerCards: NFTCard[] = [
     skills: { geschicklichkeit: 80, intelligenz: 82, staerke: 65 },
     ability: "System-Crash: Legt Netzwerke lahm",
     rarity: "selten",
-    image: "/lovable-uploads/969ce4eb-64aa-4b96-8591-b64de4f5d785.png"
+    image: "/lovable-uploads/727a6b18-de51-4104-9f42-f3e4c8b4b555.png"
   },
   {
     id: 9,
