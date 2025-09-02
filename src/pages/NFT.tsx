@@ -91,13 +91,12 @@ const NFT = () => {
                     {getRarityText(card.rarity)}
                   </Badge>
                 </div>
-                <div className="w-full h-40 bg-muted rounded-lg flex items-center justify-center mb-4">
-                  <div className={`w-20 h-20 rounded-full ${card.team === "murat" ? "bg-blue-600" : "bg-red-600"} flex items-center justify-center`}>
-                    {card.team === "murat" ? 
-                      <Shield className="w-10 h-10 text-white" /> : 
-                      <Zap className="w-10 h-10 text-white" />
-                    }
-                  </div>
+                <div className="w-full h-40 bg-muted rounded-lg mb-4 overflow-hidden">
+                  <img 
+                    src={card.image} 
+                    alt={card.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">

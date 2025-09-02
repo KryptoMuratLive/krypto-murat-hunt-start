@@ -35,7 +35,7 @@ const characters: Character[] = [
     stärke: 75,
     fähigkeit: "Bitcoin-Radar: Findet versteckte Krypto-Hinweise",
     seltenheit: "legendary",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/c6facd2d-9500-464b-bcfc-610eefb2daf2.png",
     lore: "Der Protagonist unserer Geschichte. Ein ehemaliger Finanzexperte, der alles verlor und nun auf der Suche nach dem ultimativen Bitcoin ist.",
     backstory: "Geboren in den Ruinen des traditionellen Finanzsystems, wurde Murat zum Meister der digitalen Währungen. Seine Obsession begann mit einem verlorenen Wallet mit 10.000 Bitcoin. Seitdem jagt er den perfekten Trade, den einen Fund, der alles ändern wird. Seine Fähigkeiten im Aufspüren versteckter Krypto-Schätze sind legendär - manche sagen, er kann Bitcoin riechen."
   },
@@ -48,7 +48,7 @@ const characters: Character[] = [
     stärke: 60,
     fähigkeit: "Code-Breaker: Hackt gegnerische Systeme",
     seltenheit: "epic",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/5c45d27f-11a9-467e-8831-108b1acec5bb.png",
     lore: "Murats rechte Hand in der digitalen Welt. Ein Genie im Brechen von Codes und Systemen.",
     backstory: "Einst ein White-Hat-Hacker für große Konzerne, wandte er sich der dunklen Seite zu, als er die Korruption im System erkannte. Seine Finger tanzen über die Tastatur wie ein Pianist über die Tasten. Er kann in Sekunden Systeme knacken, für die andere Stunden brauchen. Seine Loyalität zu Murat entstand, als dieser ihm half, aus einem Gefängnis für Cyberkriminelle zu entkommen."
   },
@@ -61,7 +61,7 @@ const characters: Character[] = [
     stärke: 55,
     fähigkeit: "Market-Vision: Vorhersage von Krypto-Bewegungen",
     seltenheit: "rare",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/28c2d5ea-2a2e-4931-8f5c-944e67d4c27d.png",
     lore: "Der Stratege des Teams. Seine Marktanalysen sind so präzise, als könnte er die Zukunft sehen.",
     backstory: "Früher ein erfolgreicher Hedge-Fund-Manager, verlor er alles beim großen Crypto-Crash von 2022. Doch aus der Asche erhob er sich mit einer fast übernatürlichen Fähigkeit, Marktbewegungen vorherzusagen. Seine Charts sind wie Kunstwerke - komplex, schön und tödlich genau. Murat fand ihn in einer verlassenen Börse, umgeben von hunderten von Bildschirmen."
   },
@@ -74,7 +74,7 @@ const characters: Character[] = [
     stärke: 80,
     fähigkeit: "Sicherheits-Schild: Schutz vor Angriffen",
     seltenheit: "rare",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/626ae0ce-f709-4817-b15e-0e6eb1377771.png",
     lore: "Der Beschützer der Gruppe. Niemand kommt an den Schätzen von Team Murat vorbei, solange er wacht.",
     backstory: "Ein ehemaliger Bankensicherheitsexperte, der die Grenzen zwischen physischer und digitaler Sicherheit verwischte. Nach einem Überfall auf seine Bank, bei dem Kryptowährungen gestohlen wurden, schwor er, nie wieder zuzulassen, dass jemand das verliert, was ihm anvertraut wird. Seine Hardware-Wallets sind wie Festungen - undurchdringlich und absolut sicher."
   },
@@ -87,7 +87,7 @@ const characters: Character[] = [
     stärke: 65,
     fähigkeit: "Schnell-Tausch: Blitzschnelle Transaktionen",
     seltenheit: "common",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/20addb9a-1408-4a33-bbd0-4f7592ded7fe.png",
     lore: "Jung, schnell und hungrig nach Erfolg. Seine Geschwindigkeit bei Transaktionen ist unübertroffen.",
     backstory: "Der jüngste im Team, aber mit Reflexen wie ein Raubtier. Aufgewachsen in der DeFi-Welt, kennt er jeden Trick, jeden Pool, jeden Arbitrage-Vorteil. Seine Finger bewegen sich so schnell über das Interface, dass andere nur Unschärfe sehen. Murat erkannte sein Talent, als er in einer einzigen Nacht 1000% Gewinn machte - und das dreimal hintereinander."
   },
@@ -100,7 +100,7 @@ const characters: Character[] = [
     stärke: 85,
     fähigkeit: "Unsichtbarkeit: Kann unentdeckt angreifen",
     seltenheit: "legendary",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/727a6b18-de51-4104-9f42-f3e4c8b4b555.png",
     lore: "Der mysteriöse Anführer der Jäger. Niemand weiß, wer er wirklich ist oder warum er Murat jagt.",
     backstory: "Eine Legende in der Unterwelt der Kryptowährungen. Manche sagen, er sei ein ehemaliger Regierungsagent. Andere behaupten, er sei ein KI-Programm, das Bewusstsein erlangt hat. Was sicher ist: Er ist unaufhaltbar, unsichtbar und absolut entschlossen, Murat zu finden. Seine Identität ist das bestgehütete Geheimnis der Krypto-Welt. Wenn er kommt, merkst du es erst, wenn es zu spät ist."
   },
@@ -113,7 +113,7 @@ const characters: Character[] = [
     stärke: 70,
     fähigkeit: "Tracking: Verfolgt digitale Spuren",
     seltenheit: "epic",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/9c6a0171-a3bd-472b-afe2-a3bc8fd65379.png",
     lore: "Ein Meister der digitalen Forensik. Keine Spur ist zu klein, keine Verschleierung zu clever.",
     backstory: "Früher ein Ermittler bei der Cyber-Polizei, wurde er vom Schatten-Jäger rekrutiert, nachdem er zu nah an die Wahrheit über eine große Krypto-Verschwörung gekommen war. Seine Fähigkeit, digitale Fußabdrücke zu verfolgen, grenzt an das Übernatürliche. Er kann eine Bitcoin-Transaktion durch hunderte von Mixern verfolgen und am Ende immer den wahren Absender finden."
   },
@@ -126,7 +126,7 @@ const characters: Character[] = [
     stärke: 65,
     fähigkeit: "System-Crash: Legt Netzwerke lahm",
     seltenheit: "rare",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/969ce4eb-64aa-4b96-8591-b64de4f5d785.png",
     lore: "Spezialist für Chaos und Zerstörung in digitalen Netzwerken. Wo er auftaucht, folgen Stromausfälle.",
     backstory: "Ein ehemaliger Systemadministrator, der zu tief in die dunklen Ecken des Internets vorgedrungen ist. Nachdem er Zeuge einer massiven Manipulation der Blockchain wurde und niemand ihm glaubte, beschloss er, das System von innen zu zerstören. Seine Malware ist wie ein Virus - sie breitet sich aus, lernt und passt sich an, bis das gesamte Netzwerk zusammenbricht."
   },
@@ -139,7 +139,7 @@ const characters: Character[] = [
     stärke: 60,
     fähigkeit: "Info-Steal: Stiehlt wichtige Informationen",
     seltenheit: "rare",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/2fafcaee-f583-4c56-a67c-cb1331683762.png",
     lore: "Ein Phantom in der digitalen Welt. Er nimmt, was er braucht, ohne je gesehen zu werden.",
     backstory: "Aufgewachsen in den Slums der Krypto-Welt, lernte er früh, dass Information Macht ist. Seine erste große Beute waren die privaten Schlüssel eines Millionärs - seitdem sammelt er Geheimnisse wie andere Briefmarken. Er kann in jedes System eindringen, jede Verschlüsselung knacken und jeden Gedanken stehlen, der jemals digital gespeichert wurde."
   },
@@ -152,7 +152,7 @@ const characters: Character[] = [
     stärke: 55,
     fähigkeit: "Chain-Break: Unterbricht Blockchain-Verbindungen",
     seltenheit: "common",
-    image: "/placeholder.svg",
+    image: "/lovable-uploads/756162d4-9d05-4cb0-9b2f-10325d326d99.png",
     lore: "Ein Theoretiker des Chaos. Er versteht die Blockchain besser als ihre Erschaffer - nur um sie zu zerstören.",
     backstory: "Ein brillanter Kryptograf, der die fundamentalen Schwächen der Blockchain-Technologie entdeckte. Als seine Warnungen ignoriert wurden, beschloss er, seine Theorien in die Praxis umzusetzen. Seine Algorithmen können selbst die sichersten Chains zum Erliegen bringen. Er sieht sich nicht als Zerstörer, sondern als Chirurg, der das kranke System von seinen Fehlern befreit."
   }
