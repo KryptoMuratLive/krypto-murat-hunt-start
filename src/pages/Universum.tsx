@@ -35,7 +35,7 @@ const characters: Character[] = [
     stärke: 75,
     fähigkeit: "Bitcoin-Radar: Findet versteckte Krypto-Hinweise",
     seltenheit: "legendary",
-    image: "/lovable-uploads/c6facd2d-9500-464b-bcfc-610eefb2daf2.png",
+    image: "/lovable-uploads/28c2d5ea-2a2e-4931-8f5c-944e67d4c27d.png",
     lore: "Der Protagonist unserer Geschichte. Ein ehemaliger Finanzexperte, der alles verlor und nun auf der Suche nach dem ultimativen Bitcoin ist.",
     backstory: "Geboren in den Ruinen des traditionellen Finanzsystems, wurde Murat zum Meister der digitalen Währungen. Seine Obsession begann mit einem verlorenen Wallet mit 10.000 Bitcoin. Seitdem jagt er den perfekten Trade, den einen Fund, der alles ändern wird. Seine Fähigkeiten im Aufspüren versteckter Krypto-Schätze sind legendär - manche sagen, er kann Bitcoin riechen."
   },
@@ -55,13 +55,13 @@ const characters: Character[] = [
   {
     id: 3,
     name: "Krypto-Analyst",
-    team: "murat",
+    team: "jäger",
     geschicklichkeit: 70,
     intelligenz: 85,
     stärke: 55,
     fähigkeit: "Market-Vision: Vorhersage von Krypto-Bewegungen",
     seltenheit: "rare",
-    image: "/lovable-uploads/28c2d5ea-2a2e-4931-8f5c-944e67d4c27d.png",
+    image: "/lovable-uploads/c6facd2d-9500-464b-bcfc-610eefb2daf2.png",
     lore: "Der Stratege des Teams. Seine Marktanalysen sind so präzise, als könnte er die Zukunft sehen.",
     backstory: "Früher ein erfolgreicher Hedge-Fund-Manager, verlor er alles beim großen Crypto-Crash von 2022. Doch aus der Asche erhob er sich mit einer fast übernatürlichen Fähigkeit, Marktbewegungen vorherzusagen. Seine Charts sind wie Kunstwerke - komplex, schön und tödlich genau. Murat fand ihn in einer verlassenen Börse, umgeben von hunderten von Bildschirmen."
   },
@@ -81,7 +81,7 @@ const characters: Character[] = [
   {
     id: 5,
     name: "DeFi-Ninja",
-    team: "murat",
+    team: "jäger",
     geschicklichkeit: 85,
     intelligenz: 75,
     stärke: 65,
@@ -100,7 +100,7 @@ const characters: Character[] = [
     stärke: 85,
     fähigkeit: "Unsichtbarkeit: Kann unentdeckt angreifen",
     seltenheit: "legendary",
-    image: "/lovable-uploads/727a6b18-de51-4104-9f42-f3e4c8b4b555.png",
+    image: "/lovable-uploads/969ce4eb-64aa-4b96-8591-b64de4f5d785.png",
     lore: "Der mysteriöse Anführer der Jäger. Niemand weiß, wer er wirklich ist oder warum er Murat jagt.",
     backstory: "Eine Legende in der Unterwelt der Kryptowährungen. Manche sagen, er sei ein ehemaliger Regierungsagent. Andere behaupten, er sei ein KI-Programm, das Bewusstsein erlangt hat. Was sicher ist: Er ist unaufhaltbar, unsichtbar und absolut entschlossen, Murat zu finden. Seine Identität ist das bestgehütete Geheimnis der Krypto-Welt. Wenn er kommt, merkst du es erst, wenn es zu spät ist."
   },
@@ -120,13 +120,13 @@ const characters: Character[] = [
   {
     id: 8,
     name: "Netzwerk-Saboteur",
-    team: "jäger",
+    team: "murat",
     geschicklichkeit: 80,
     intelligenz: 82,
     stärke: 65,
     fähigkeit: "System-Crash: Legt Netzwerke lahm",
     seltenheit: "rare",
-    image: "/lovable-uploads/969ce4eb-64aa-4b96-8591-b64de4f5d785.png",
+    image: "/lovable-uploads/727a6b18-de51-4104-9f42-f3e4c8b4b555.png",
     lore: "Spezialist für Chaos und Zerstörung in digitalen Netzwerken. Wo er auftaucht, folgen Stromausfälle.",
     backstory: "Ein ehemaliger Systemadministrator, der zu tief in die dunklen Ecken des Internets vorgedrungen ist. Nachdem er Zeuge einer massiven Manipulation der Blockchain wurde und niemand ihm glaubte, beschloss er, das System von innen zu zerstören. Seine Malware ist wie ein Virus - sie breitet sich aus, lernt und passt sich an, bis das gesamte Netzwerk zusammenbricht."
   },
@@ -146,7 +146,7 @@ const characters: Character[] = [
   {
     id: 10,
     name: "Blockchain-Brecher",
-    team: "jäger",
+    team: "murat",
     geschicklichkeit: 70,
     intelligenz: 90,
     stärke: 55,
