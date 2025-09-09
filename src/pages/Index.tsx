@@ -15,19 +15,20 @@ const Index = () => {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover -z-10"
+          className="absolute inset-0 w-full h-full object-cover z-0"
         >
           <source src="/neu.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background/60" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,165,0,0.15),transparent_70%)]" />
+        
+        {/* Optional Overlay für bessere Lesbarkeit */}
+        <div className="absolute inset-0 bg-black/30 z-10" />
         
         {/* Wallet Widget in top right */}
         <div className="absolute top-8 right-8 z-20">
           <WalletWidget />
         </div>
         
-        <div className="container mx-auto px-4 text-center relative z-10">
+        <div className="container mx-auto px-4 text-center relative z-20">
           <div className="max-w-4xl mx-auto space-y-8">
             <h1 className="comic-title mb-6">
               Die Jagd hat begonnen
