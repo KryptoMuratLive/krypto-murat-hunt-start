@@ -1,5 +1,5 @@
 import { useAddress, useContract, useNFT, useConnectionStatus } from "@thirdweb-dev/react";
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -36,27 +36,69 @@ const Live = () => {
   };
 
   const StreamPlayer = ({ camera }: { camera: CameraType }) => {
+    const videoRef = useRef<HTMLVideoElement>(null);
+    
+    useEffect(() => {
+      const loadHLS = async () => {
+        if (videoRef.current) {
+          const video = videoRef.current;
+          const streamUrl = streamUrls[camera];
+          
+          console.log('Loading HLS stream:', streamUrl);
+          
+          // Dynamically import hls.js
+          const Hls = (await import('hls.js')).default;
+          
+          if (Hls.isSupported()) {
+            const hls = new Hls({
+              enableWorker: true,
+              lowLatencyMode: true,
+              backBufferLength: 90
+            });
+            
+            hls.loadSource(streamUrl);
+            hls.attachMedia(video);
+            
+            hls.on(Hls.Events.MANIFEST_PARSED, () => {
+              console.log('HLS manifest loaded, starting playback');
+              video.play().catch(console.error);
+            });
+            
+            hls.on(Hls.Events.ERROR, (event, data) => {
+              console.error('HLS error:', data);
+              if (data.fatal) {
+                hls.destroy();
+              }
+            });
+            
+            return () => hls.destroy();
+          } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+            // Safari native HLS support
+            video.src = streamUrl;
+            video.play().catch(console.error);
+          } else {
+            console.error('HLS not supported in this browser');
+          }
+        }
+      };
+      
+      loadHLS();
+    }, [camera]);
+    
     return (
       <div className="aspect-video bg-black rounded-lg relative overflow-hidden">
-        {/* Livepeer HLS Stream - DIREKT SICHTBAR */}
+        {/* HLS Video Player mit hls.js */}
         <video 
-          src={streamUrls[camera]}
+          ref={videoRef}
           autoPlay
           muted
-          loop
           controls
           className="w-full h-full object-cover"
           poster="/lovable-uploads/1945b2dd-4535-4341-8070-a9c7428358a3.png"
-          onError={(e) => {
-            console.error('Video failed to load:', e);
-            // Fallback to poster image
-          }}
-        >
-          <source src={streamUrls[camera]} type="application/x-mpegURL" />
-          <p className="text-white text-center mt-4">
-            Stream wird geladen... Falls nichts erscheint, prüfe die Netzwerkverbindung.
-          </p>
-        </video>
+          onLoadStart={() => console.log('Video loading started')}
+          onCanPlay={() => console.log('Video can play')}
+          onError={(e) => console.error('Video error:', e)}
+        />
         
         {/* Live indicator */}
         <div className="absolute top-4 left-4 z-10">
