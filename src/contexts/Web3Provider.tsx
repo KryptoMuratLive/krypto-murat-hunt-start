@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { metaMask, walletConnect, coinbaseWallet, injected } from '@wagmi/connectors';
 import { ReactNode } from 'react';
 
-const projectId = 'kryptomurat-live';
+const projectId = 'c4f79cc821944d9680842e34466bfbd4'; // Demo WalletConnect Project ID (32 characters)
 
 const config = createConfig({
   chains: [polygon, mainnet, sepolia],
