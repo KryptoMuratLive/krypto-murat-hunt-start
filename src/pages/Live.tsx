@@ -18,16 +18,18 @@ const Live = () => {
   const [selectedCamera, setSelectedCamera] = useState<CameraType>("murat");
   const [showDemo, setShowDemo] = useState(true); // Demo-Modus für sofortigen Zugang
 
-  // Livepeer Stream Configuration
+  // Livepeer Stream Configuration - DEINE ECHTEN DATEN
   const streamKeys = {
-    murat: "029feh9xp563f1nv", // Livepeer Playback ID
-    jaeger: "029feh9xp563f1nv"  // Using same stream for both cameras for demo
+    murat: "029feh9xp563f1nv", // Deine Wiedergabe-ID
+    jaeger: "029feh9xp563f1nv"  // Beide Kameras zeigen deinen Live-Stream
   };
 
   const streamUrls = {
     murat: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8",
     jaeger: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8"
   };
+
+  // Deine Stream-ID für Referenz: 029f5234-890e-42ea-be17-f16278af0656
 
   const handleCameraSwitch = (camera: CameraType) => {
     setSelectedCamera(camera);
