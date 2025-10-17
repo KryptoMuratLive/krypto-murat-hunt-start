@@ -53,14 +53,7 @@ const App = () => (
               } 
             />
             <Route path="/game" element={<Game />} />
-            <Route 
-              path="/live" 
-              element={
-                <ProtectedRoute requiredAccessLevel="token">
-                  <Live />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/live" element={<Live />} />
             <Route 
               path="/vote" 
               element={
