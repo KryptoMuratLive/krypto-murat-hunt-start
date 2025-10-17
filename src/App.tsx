@@ -4,7 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Web3Provider } from "@/contexts/Web3Provider";
-import { CustomThirdwebProvider } from "@/contexts/ThirdwebProvider";
+
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
@@ -29,7 +29,6 @@ const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
       <Web3Provider>
-        <CustomThirdwebProvider>
           <TooltipProvider>
             <Toaster />
             <Sonner />
@@ -82,8 +81,7 @@ const App = () => (
           </Routes>
           </BrowserRouter>
         </TooltipProvider>
-      </CustomThirdwebProvider>
-    </Web3Provider>
+      </Web3Provider>
   </QueryClientProvider>
   </ErrorBoundary>
 );

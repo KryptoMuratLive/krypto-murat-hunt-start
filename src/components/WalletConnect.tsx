@@ -98,7 +98,7 @@ export const WalletConnect = () => {
         </Button>
         
         <p className="text-xs text-muted-foreground mt-4 text-center">
-          Unterstützt MetaMask, WalletConnect, Coinbase Wallet und mehr
+          Unterstützt MetaMask und Coinbase Wallet
         </p>
       </CardContent>
     </Card>
