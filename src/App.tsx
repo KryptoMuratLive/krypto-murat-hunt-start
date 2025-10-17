@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Web3Provider } from "@/contexts/Web3Provider";
 import { CustomThirdwebProvider } from "@/contexts/ThirdwebProvider";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Serie from "./pages/Serie";
@@ -25,13 +26,14 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <Web3Provider>
-      <CustomThirdwebProvider>
-        <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
+  <ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <Web3Provider>
+        <CustomThirdwebProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/nft" element={<NFT />} />
@@ -78,11 +80,12 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </CustomThirdwebProvider>
-  </Web3Provider>
-</QueryClientProvider>
+          </BrowserRouter>
+        </TooltipProvider>
+      </CustomThirdwebProvider>
+    </Web3Provider>
+  </QueryClientProvider>
+  </ErrorBoundary>
 );
 
 export default App;

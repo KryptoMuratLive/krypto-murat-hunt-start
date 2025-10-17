@@ -1,26 +1,25 @@
 import { createConfig, http, WagmiProvider } from 'wagmi';
 import { mainnet, sepolia, polygon } from 'wagmi/chains';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { metaMask, walletConnect, coinbaseWallet, injected } from '@wagmi/connectors';
+import { metaMask, coinbaseWallet, injected } from '@wagmi/connectors';
 import { ReactNode } from 'react';
 
-const projectId = 'c4f79cc821944d9680842e34466bfbd4'; // Demo WalletConnect Project ID (32 characters)
-
+// Removed WalletConnect to fix DataCloneError - can be re-added with proper configuration if needed
 const config = createConfig({
   chains: [polygon, mainnet, sepolia],
   connectors: [
-    metaMask(),
-    walletConnect({ 
-      projectId,
-      metadata: {
+    injected({ target: 'metaMask' }),
+    metaMask({
+      dappMetadata: {
         name: 'KryptoMurat Live',
-        description: 'MURAT Token Trading Platform',
-        url: 'https://kryptomurat.live',
-        icons: ['https://kryptomurat.live/favicon.ico']
+        url: typeof window !== 'undefined' ? window.location.origin : 'https://kryptomurat.live',
+        iconUrl: 'https://kryptomurat.live/favicon.ico'
       }
     }),
-    coinbaseWallet({ appName: 'KryptoMurat Live' }),
-    injected(),
+    coinbaseWallet({ 
+      appName: 'KryptoMurat Live',
+      appLogoUrl: 'https://kryptomurat.live/favicon.ico'
+    }),
   ],
   transports: {
     [polygon.id]: http(),
