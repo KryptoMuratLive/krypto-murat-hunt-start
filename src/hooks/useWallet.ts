@@ -18,7 +18,7 @@ export type AccessLevel = 'none' | 'standard' | 'premium' | 'jaeger' | 'token';
 
 export const useWallet = () => {
   const { address, isConnected, isConnecting } = useAccount();
-  const { connect, connectAsync, connectors, isPending } = useConnect();
+  const { connect, connectors, isPending } = useConnect();
   const { disconnect } = useDisconnect();
   const { hasMinimumTokens } = useMuratToken();
 
@@ -73,30 +73,13 @@ export const useWallet = () => {
   // Legacy compatibility
   const hasRequiredNFT = hasAnyNFT;
 
-  const connectWallet = async () => {
-    // Try MetaMask first, then Coinbase, then fallback to first available
-    const byName = (n: string) => connectors.find((c) => c.name?.toLowerCase().includes(n));
-    try {
-      const mm = byName('metamask') || connectors.find((c) => (c as any).id === 'metaMask');
-      if (mm) {
-        await connectAsync({ connector: mm });
-        return;
-      }
-    } catch (err) {
-      console.warn('MetaMask connect failed', err);
-    }
-    try {
-      const cb = byName('coinbase') || connectors.find((c) => (c as any).id === 'coinbaseWallet');
-      if (cb) {
-        await connectAsync({ connector: cb });
-        return;
-      }
-    } catch (err) {
-      console.warn('Coinbase connect failed', err);
-    }
-    // Fallback
-    if (connectors[0]) {
-      connect({ connector: connectors[0] });
+  const connectWallet = () => {
+    const preferredConnector = connectors.find(
+      (connector) => connector.name === 'MetaMask'
+    ) || connectors[0];
+    
+    if (preferredConnector) {
+      connect({ connector: preferredConnector });
     }
   };
 
