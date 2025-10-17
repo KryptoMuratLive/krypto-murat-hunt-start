@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Link } from "react-router-dom";
 import { ArrowLeft, Wallet, Gamepad2, Shield, Zap, Brain } from "lucide-react";
 import { allNFTCards, muratCards, jaegerCards } from "@/data/nftCards";
+import { SocialShare } from "@/components/SocialShare";
+import { toast } from "sonner";
 
 const NFT = () => {
   const [selectedTeam, setSelectedTeam] = useState<"all" | "murat" | "jaeger">("all");
@@ -86,10 +88,18 @@ const NFT = () => {
             <Card key={card.id} className="comic-card group hover:scale-105 transition-transform duration-300">
               <CardHeader className="pb-4">
                 <div className="flex justify-between items-start mb-2">
-                  <CardTitle className="text-xl">{card.name}</CardTitle>
-                  <Badge className={`${getRarityColor(card.rarity)} text-white`}>
-                    {getRarityText(card.rarity)}
-                  </Badge>
+                  <div className="flex-1">
+                    <CardTitle className="text-xl">{card.name}</CardTitle>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge className={`${getRarityColor(card.rarity)} text-white`}>
+                      {getRarityText(card.rarity)}
+                    </Badge>
+                    <SocialShare 
+                      title={`${card.name} NFT`}
+                      description={`Sammelkarte: ${card.ability}`}
+                    />
+                  </div>
                 </div>
                 <div className="w-full h-40 bg-muted rounded-lg mb-4 overflow-hidden">
                   <img 
@@ -131,7 +141,14 @@ const NFT = () => {
                 {/* Mint Button */}
                 <Dialog open={walletDialogOpen} onOpenChange={setWalletDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="w-full neon-glow">
+                    <Button 
+                      className="w-full neon-glow"
+                      onClick={() => {
+                        toast.info("NFT Minting", {
+                          description: `Bereite Minting für ${card.name} vor...`,
+                        });
+                      }}
+                    >
                       Jetzt minten
                     </Button>
                   </DialogTrigger>

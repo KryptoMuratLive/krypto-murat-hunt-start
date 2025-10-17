@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Play, Lock, Crown, Vote, Wallet } from "lucide-react";
+import { SocialShare } from "@/components/SocialShare";
+import { toast } from "sonner";
 
 const episodes = [
   {
@@ -72,10 +74,15 @@ const Serie = () => {
 
   const handleEpisodeClick = (episode: any) => {
     if (episode.unlocked) {
-      // Navigate to episode detail page
       window.location.href = `/folge/${episode.id}`;
+      toast.success("Episode wird geladen", {
+        description: `Folge ${episode.id}: ${episode.title}`,
+      });
     } else {
       setShowWalletDialog(true);
+      toast.info("Episode gesperrt", {
+        description: "Verbinde deine Wallet um diese Episode freizuschalten",
+      });
     }
   };
 
@@ -126,10 +133,19 @@ const Serie = () => {
               )}
               
               <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>Folge {episode.id}: {episode.title}</span>
-                  {getAccessIcon(episode.accessLevel)}
-                </CardTitle>
+                <div className="flex items-center justify-between mb-2">
+                  <CardTitle className="flex items-center gap-2">
+                    <span>Folge {episode.id}: {episode.title}</span>
+                    {getAccessIcon(episode.accessLevel)}
+                  </CardTitle>
+                  {episode.unlocked && (
+                    <SocialShare 
+                      title={`Folge ${episode.id}: ${episode.title}`}
+                      description={episode.description}
+                      url={`${window.location.origin}/folge/${episode.id}`}
+                    />
+                  )}
+                </div>
                 <p className="text-sm text-accent">
                   {getAccessText(episode.accessLevel)}
                 </p>

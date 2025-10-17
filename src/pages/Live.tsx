@@ -7,6 +7,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Link } from "react-router-dom";
 import { ArrowLeft, Camera, Users, Play, Lock, Eye, Wallet, AlertCircle } from "lucide-react";
 import LivestreamSubtitles from "@/components/LivestreamSubtitles";
+import { useStreamStatus } from "@/hooks/useStreamStatus";
+import { toast } from "sonner";
+import { SocialShare } from "@/components/SocialShare";
 
 // NFT Gate Configuration (Dummy for testing)
 const NFT_GATE_CONTRACT = "0x0000000000000000000000000000000000000000"; // Dummy contract for testing
@@ -16,12 +19,12 @@ type CameraType = "murat" | "jaeger";
 
 const Live = () => {
   const [selectedCamera, setSelectedCamera] = useState<CameraType>("murat");
-  const [showDemo, setShowDemo] = useState(true); // Demo-Modus für sofortigen Zugang
+  const [showDemo, setShowDemo] = useState(true);
 
-  // Livepeer Stream Configuration - DEINE ECHTEN DATEN
+  // Livepeer Stream Configuration
   const streamKeys = {
-    murat: "029feh9xp563f1nv", // Deine Wiedergabe-ID
-    jaeger: "029feh9xp563f1nv"  // Beide Kameras zeigen deinen Live-Stream
+    murat: "029feh9xp563f1nv",
+    jaeger: "029feh9xp563f1nv"
   };
 
   const streamUrls = {
@@ -29,10 +32,27 @@ const Live = () => {
     jaeger: "https://livepeercdn.studio/hls/029feh9xp563f1nv/index.m3u8"
   };
 
-  // Deine Stream-ID für Referenz: 029f5234-890e-42ea-be17-f16278af0656
+  // Stream status monitoring
+  const streamStatus = useStreamStatus(streamUrls[selectedCamera]);
+
+  useEffect(() => {
+    if (streamStatus.isLive && !streamStatus.isLoading) {
+      toast.success("Stream ist live!", {
+        description: `${streamStatus.viewerCount} Zuschauer sind dabei`,
+        duration: 3000,
+      });
+    } else if (streamStatus.error) {
+      toast.error("Stream offline", {
+        description: "Der Stream ist momentan nicht verfügbar",
+      });
+    }
+  }, [streamStatus.isLive, streamStatus.error]);
 
   const handleCameraSwitch = (camera: CameraType) => {
     setSelectedCamera(camera);
+    toast.info("Kamera gewechselt", {
+      description: `Zu ${camera === "murat" ? "Murat-Cam" : "Jäger-Cam"} gewechselt`,
+    });
   };
 
   const StreamPlayer = ({ camera }: { camera: CameraType }) => {
@@ -102,17 +122,19 @@ const Live = () => {
         
         {/* Live indicator */}
         <div className="absolute top-4 left-4 z-10">
-          <Badge className="bg-red-500 text-white animate-pulse">
-            🔴 LIVE
+          <Badge className={`${streamStatus.isLive ? 'bg-red-500 animate-pulse' : 'bg-gray-500'} text-white`}>
+            {streamStatus.isLive ? '🔴 LIVE' : '⚫ OFFLINE'}
           </Badge>
         </div>
 
         {/* Viewer count */}
         <div className="absolute top-4 right-4 z-10">
-          <Badge variant="secondary" className="bg-black/50 text-white">
-            <Users className="w-3 h-3 mr-1" />
-            1,337 Zuschauer
-          </Badge>
+          {streamStatus.isLive && (
+            <Badge variant="secondary" className="bg-black/50 text-white">
+              <Users className="w-3 h-3 mr-1" />
+              {streamStatus.viewerCount.toLocaleString()} Zuschauer
+            </Badge>
+          )}
         </div>
 
         {/* Camera info overlay */}
@@ -148,9 +170,15 @@ const Live = () => {
             </Button>
           </Link>
           
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            🎥 KryptoMurat Live Stream
-          </h1>
+          <div className="flex items-center justify-between mb-4">
+            <h1 className="text-4xl font-bold text-foreground">
+              🎥 KryptoMurat Live Stream
+            </h1>
+            <SocialShare 
+              title="KryptoMurat Live Stream" 
+              description="Erlebe die Bitcoin-Jagd in Echtzeit!"
+            />
+          </div>
           <p className="text-xl text-muted-foreground mb-8">
             Erlebe die Bitcoin-Jagd in Echtzeit! Stream läuft direkt ohne Wallet-Verbindung.
           </p>
@@ -197,7 +225,14 @@ const Live = () => {
             <div className="space-y-2">
               <p><strong>Aktive Kamera:</strong> {selectedCamera === "murat" ? "Murat-Cam" : "Jäger-Cam"}</p>
               <p><strong>Stream ID:</strong> <code className="bg-muted px-2 py-1 rounded text-sm">{streamKeys[selectedCamera]}</code></p>
-              <p><strong>Status:</strong> <Badge className="bg-green-600">🔴 Live</Badge></p>
+              <p><strong>Status:</strong> 
+                <Badge className={streamStatus.isLive ? "bg-green-600 ml-2" : "bg-gray-500 ml-2"}>
+                  {streamStatus.isLoading ? '⏳ Lädt...' : streamStatus.isLive ? '🔴 Live' : '⚫ Offline'}
+                </Badge>
+              </p>
+              {streamStatus.isLive && (
+                <p><strong>Zuschauer:</strong> {streamStatus.viewerCount.toLocaleString()}</p>
+              )}
               <p className="text-sm text-muted-foreground mt-4">
                 💡 Falls der Stream nicht lädt, liegt es möglicherweise an deiner Internetverbindung oder der Browser unterstützt HLS nicht.
               </p>
