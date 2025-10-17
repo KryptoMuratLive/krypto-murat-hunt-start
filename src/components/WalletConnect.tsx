@@ -54,7 +54,11 @@ export const WalletConnect = () => {
           
           <Button 
             variant="outline" 
-            onClick={() => disconnect()}
+            onClick={(e) => {
+              e.preventDefault();
+              console.log('Disconnecting wallet...');
+              disconnect();
+            }}
             className="w-full"
           >
             <Unlink className="w-4 h-4 mr-2" />

@@ -110,7 +110,9 @@ export const WalletWidget = () => {
               <Button 
                 variant="outline" 
                 size="sm"
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log('Disconnecting wallet from widget...');
                   disconnect();
                   setShowDetails(false);
                 }}
